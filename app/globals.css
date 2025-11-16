@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-space-grotesk: 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  * {
+    @apply border-neutral-200;
+  }
+
+  body {
+    @apply bg-neutral-50 text-neutral-900 antialiased;
+  }
+
+  /* Focus visible styles for accessibility */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-accent-500 ring-offset-2;
+  }
+
+  /* Skip to main content link for keyboard navigation */
+  .skip-to-main {
+    @apply absolute left-0 top-0 z-50 -translate-y-full bg-accent-500 px-4 py-2 text-white focus:translate-y-0;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --tw-ring-offset-width: 4px;
+  }
+}
+
+/* High contrast mode class (user-activated) */
+.high-contrast {
+  --tw-prose-body: theme('colors.neutral.900');
+  --tw-prose-headings: theme('colors.neutral.950');
+  --tw-prose-links: theme('colors.accent.700');
+}
+
+.high-contrast body {
+  @apply bg-white text-neutral-950;
+}
+
+.high-contrast .bg-neutral-50,
+.high-contrast .bg-neutral-100 {
+  @apply bg-white border-2 border-neutral-900;
+}
+
+.high-contrast .text-neutral-600,
+.high-contrast .text-neutral-700 {
+  @apply text-neutral-900;
+}
+
+.high-contrast button,
+.high-contrast a {
+  @apply font-bold;
+}
+
+.high-contrast .border-neutral-200 {
+  @apply border-neutral-900 border-2;
+}
