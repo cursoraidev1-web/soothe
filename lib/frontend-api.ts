@@ -23,16 +23,23 @@ async function fetchAPI<T>(endpoint: string, options: FetchOptions = {}): Promis
     config.body = JSON.stringify(body)
   }
 
+  const fullUrl = `${API_URL}${endpoint}`
+  
   try {
-    const response = await fetch(`${API_URL}${endpoint}`, config)
+    console.log(`[Frontend API] Fetching: ${fullUrl}`)
+    const response = await fetch(fullUrl, config)
 
     if (!response.ok) {
-      throw new Error(`API Error: ${response.statusText}`)
+      const errorText = await response.text().catch(() => response.statusText)
+      console.error(`[Frontend API] Error ${response.status}:`, errorText)
+      throw new Error(`API Error ${response.status}: ${errorText}`)
     }
 
-    return response.json()
-  } catch (error) {
-    console.error('API Error:', error)
+    const data = await response.json()
+    console.log(`[Frontend API] Success: ${fullUrl}`)
+    return data
+  } catch (error: any) {
+    console.error(`[Frontend API] Failed: ${fullUrl}`, error)
     throw error
   }
 }
