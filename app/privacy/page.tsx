@@ -11,30 +11,20 @@ export default function PrivacyPage() {
     <>
       <Header />
       <div>
-      <section className="py-20 bg-gradient-to-br from-neutral-50 via-primary-50 to-accent-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center max-w-4xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-          >
+        <section className="py-20 bg-gradient-to-br from-neutral-50 via-primary-50 to-accent-50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-4xl mx-auto">
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
               Privacy Policy
             </h1>
-            <p className="text-lg text-neutral-600">Last updated: November 16, 2025</p>
-          </motion.div>
-        </div>
-      </section>
+              <p className="text-lg text-neutral-600">Last updated: November 16, 2025</p>
+            </div>
+          </div>
+        </section>
 
-      <section className="py-20 bg-white">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="prose prose-lg max-w-none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.7 }}
-          >
+        <section className="py-20 bg-white">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <div className="prose prose-lg max-w-none">
             <div className="text-neutral-700 space-y-6 leading-relaxed">
               <p>
                 At SOOTHE TECHNOLOGIES LIMITED, we are committed to protecting your privacy and ensuring 
@@ -84,7 +74,7 @@ export default function PrivacyPage() {
                 </a>
               </p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
       </div>
