@@ -61,9 +61,12 @@ export default function EditSolutionPage() {
   const fetchCategories = async () => {
     try {
       const response = await api.get<SolutionCategory[]>('/solutions/categories')
-      setCategories(response)
+      const safeCategories = Array.isArray(response) ? response : []
+      setCategories(safeCategories)
     } catch (error) {
+      console.error('Failed to fetch categories:', error)
       toast.error('Failed to fetch categories')
+      setCategories([])
     }
   }
 
