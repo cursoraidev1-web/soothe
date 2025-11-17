@@ -16,9 +16,11 @@ import type { Accessibility } from '@/lib/types'
 const accessibilitySchema = z.object({
   statement: z.string().optional(),
   wcagLevel: z.string().optional(),
-  enableHighContrast: z.boolean(),
-  enableScreenReader: z.boolean(),
-  enableKeyboardNav: z.boolean(),
+  keyboardNavigation: z.boolean(),
+  screenReaderSupport: z.boolean(),
+  highContrastMode: z.boolean(),
+  textResizing: z.boolean(),
+  altTextRequired: z.boolean(),
 })
 
 type AccessibilityForm = z.infer<typeof accessibilitySchema>
@@ -44,14 +46,19 @@ export default function AccessibilityPage() {
     try {
       setLoading(true)
       const data = await api.get<Accessibility>('/accessibility')
-      reset({
-        statement: data.statement || '',
-        wcagLevel: data.wcagLevel || 'AA',
-        enableHighContrast: data.enableHighContrast || false,
-        enableScreenReader: data.enableScreenReader || false,
-        enableKeyboardNav: data.enableKeyboardNav || false,
-      })
+      if (data) {
+        reset({
+          statement: data.statement || '',
+          wcagLevel: data.wcagLevel || 'AA',
+          keyboardNavigation: data.keyboardNavigation ?? true,
+          screenReaderSupport: data.screenReaderSupport ?? true,
+          highContrastMode: data.highContrastMode ?? true,
+          textResizing: data.textResizing ?? true,
+          altTextRequired: data.altTextRequired ?? true,
+        })
+      }
     } catch (error) {
+      console.error('Failed to fetch accessibility settings:', error)
       toast.error('Failed to fetch accessibility settings')
     } finally {
       setLoading(false)
@@ -123,36 +130,60 @@ export default function AccessibilityPage() {
             <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
-                id="enableHighContrast"
-                {...register('enableHighContrast')}
+                id="keyboardNavigation"
+                {...register('keyboardNavigation')}
                 className="h-4 w-4 rounded border-gray-300"
               />
-              <Label htmlFor="enableHighContrast" className="font-normal cursor-pointer">
-                Enable High Contrast Mode
+              <Label htmlFor="keyboardNavigation" className="font-normal cursor-pointer">
+                Keyboard Navigation
               </Label>
             </div>
 
             <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
-                id="enableScreenReader"
-                {...register('enableScreenReader')}
+                id="screenReaderSupport"
+                {...register('screenReaderSupport')}
                 className="h-4 w-4 rounded border-gray-300"
               />
-              <Label htmlFor="enableScreenReader" className="font-normal cursor-pointer">
-                Enable Screen Reader Support
+              <Label htmlFor="screenReaderSupport" className="font-normal cursor-pointer">
+                Screen Reader Support
               </Label>
             </div>
 
             <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
-                id="enableKeyboardNav"
-                {...register('enableKeyboardNav')}
+                id="highContrastMode"
+                {...register('highContrastMode')}
                 className="h-4 w-4 rounded border-gray-300"
               />
-              <Label htmlFor="enableKeyboardNav" className="font-normal cursor-pointer">
-                Enable Enhanced Keyboard Navigation
+              <Label htmlFor="highContrastMode" className="font-normal cursor-pointer">
+                High Contrast Mode
+              </Label>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="textResizing"
+                {...register('textResizing')}
+                className="h-4 w-4 rounded border-gray-300"
+              />
+              <Label htmlFor="textResizing" className="font-normal cursor-pointer">
+                Text Resizing
+              </Label>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="altTextRequired"
+                {...register('altTextRequired')}
+                className="h-4 w-4 rounded border-gray-300"
+              />
+              <Label htmlFor="altTextRequired" className="font-normal cursor-pointer">
+                Alt Text Required
               </Label>
             </div>
           </CardContent>

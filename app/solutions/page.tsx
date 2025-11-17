@@ -18,7 +18,9 @@ export default async function SolutionsPage() {
     frontendApi.getAccessibility().catch(() => ({})),
   ])
 
-  const publishedSolutions = solutions.filter((s: any) => s.isPublished)
+  const solutionsArray = Array.isArray(solutions) ? solutions : []
+  const categoriesArray = Array.isArray(categories) ? categories : []
+  const publishedSolutions = solutionsArray.filter((s: any) => s.isPublished)
 
   return (
     <>
@@ -33,8 +35,8 @@ export default async function SolutionsPage() {
         </div>
 
         <div className="container mx-auto px-4 py-16">
-          {categories.length > 0 ? (
-            categories.map((category: any) => {
+          {categoriesArray.length > 0 ? (
+            categoriesArray.map((category: any) => {
               const categorySolutions = publishedSolutions.filter(
                 (s: any) => s.categoryId === category.id
               )

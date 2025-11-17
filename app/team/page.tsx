@@ -12,6 +12,7 @@ export const revalidate = 3600
 
 export default async function TeamPage() {
   const team = await frontendApi.getTeam().catch(() => [])
+  const teamArray = Array.isArray(team) ? team : []
 
   return (
     <>
@@ -38,7 +39,7 @@ export default async function TeamPage() {
         {/* Team Grid */}
         <section className="py-20 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            {team.length === 0 ? (
+            {teamArray.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-xl text-neutral-600">
                   Team information coming soon!
@@ -46,7 +47,7 @@ export default async function TeamPage() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {team.map((member: any) => (
+                {teamArray.map((member: any) => (
                   <div
                     key={member.id}
                     className="group bg-white rounded-2xl border-2 border-neutral-200 hover:border-primary-400 transition-all hover:shadow-lg overflow-hidden"

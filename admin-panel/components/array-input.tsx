@@ -19,16 +19,19 @@ export function ArrayInput({
   label,
 }: ArrayInputProps) {
   const [input, setInput] = useState('')
+  
+  // Ensure value is always an array
+  const safeValue = Array.isArray(value) ? value : []
 
   const addItem = () => {
     if (input.trim()) {
-      onChange([...value, input.trim()])
+      onChange([...safeValue, input.trim()])
       setInput('')
     }
   }
 
   const removeItem = (index: number) => {
-    onChange(value.filter((_, i) => i !== index))
+    onChange(safeValue.filter((_, i) => i !== index))
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -53,7 +56,7 @@ export function ArrayInput({
         </Button>
       </div>
       <div className="space-y-1">
-        {value.map((item, index) => (
+        {safeValue.map((item, index) => (
           <div key={index} className="flex items-center gap-2">
             <div className="flex-1 p-2 bg-muted rounded text-sm">{item}</div>
             <Button
