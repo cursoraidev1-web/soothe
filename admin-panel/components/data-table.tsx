@@ -77,13 +77,40 @@ export function DataTable({
                   key={row.id || index}
                   className="border-t hover:bg-muted/50 transition-colors"
                 >
-                  {columns.map((column) => (
-                    <td key={column.key} className="p-4">
-                      {column.render
-                        ? column.render(row[column.key], row)
-                        : row[column.key]}
-                    </td>
-                  ))}
+                  {columns.map((column) => {
+                    const value = row[column.key]
+                    let displayValue = value
+                    
+                    // Handle render function
+                    if (column.render) {
+                      displayValue = column.render(value, row)
+                    } 
+                    // Handle object values (convert to string or show '-')
+                    else if (value && typeof value === 'object') {
+                      // If it's a date, format it
+                      if (value instanceof Date) {
+                        displayValue = value.toLocaleDateString()
+                      } 
+                      // For other objects, show placeholder or stringify
+                      else {
+                        displayValue = value.name || value.title || JSON.stringify(value)
+                      }
+                    }
+                    // Handle null/undefined
+                    else if (value === null || value === undefined) {
+                      displayValue = '-'
+                    }
+                    // Handle boolean
+                    else if (typeof value === 'boolean') {
+                      displayValue = value ? 'Yes' : 'No'
+                    }
+                    
+                    return (
+                      <td key={column.key} className="p-4">
+                        {displayValue}
+                      </td>
+                    )
+                  })}
                 </tr>
               ))
             )}

@@ -25,9 +25,12 @@ export default function CategoriesListPage() {
     try {
       setLoading(true)
       const response = await api.get<SolutionCategory[]>(`/solutions/categories?search=${search}`)
-      setCategories(response)
+      const safeCategories = Array.isArray(response) ? response : []
+      setCategories(safeCategories)
     } catch (error) {
+      console.error('Failed to fetch categories:', error)
       toast.error('Failed to fetch categories')
+      setCategories([])
     } finally {
       setLoading(false)
     }

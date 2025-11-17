@@ -27,18 +27,22 @@ export function RichTextEditor({ value, onChange, label, placeholder }: RichText
     }
   }, [])
 
+  // Ensure value is always a string
+  const safeValue = typeof value === 'string' ? value : ''
+
   // Simple textarea fallback
   return (
     <div className="space-y-2">
       {label && <Label>{label}</Label>}
       <textarea
-        value={value}
+        value={safeValue}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        className="flex min-h-[200px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        placeholder={placeholder || 'Write your content here...'}
+        className="flex min-h-[200px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 font-mono"
+        style={{ fontFamily: 'monospace' }}
       />
       <p className="text-xs text-muted-foreground">
-        Full rich text editor (supports Markdown-style formatting)
+        Enter plain text or JSON content. Text will be automatically formatted for storage.
       </p>
     </div>
   )

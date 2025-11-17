@@ -25,9 +25,12 @@ export default function MediaLibraryPage() {
     try {
       setLoading(true)
       const response = await api.get<Media[]>(`/media?search=${search}`)
-      setMedia(response)
+      const safeMedia = Array.isArray(response) ? response : []
+      setMedia(safeMedia)
     } catch (error) {
+      console.error('Failed to fetch media:', error)
       toast.error('Failed to fetch media')
+      setMedia([])
     } finally {
       setLoading(false)
     }
