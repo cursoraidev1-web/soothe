@@ -23,9 +23,54 @@ export async function generateMetadata({ params }: any) {
 }
 
 export default async function BlogPostPage({ params }: any) {
-  const post = await frontendApi.getBlogPost(params.slug).catch(() => null)
+  let post = null
+  let error = null
+  
+  try {
+    post = await frontendApi.getBlogPost(params.slug)
+  } catch (err: any) {
+    console.error('Failed to fetch blog post:', err)
+    error = err.message || 'Failed to fetch post'
+  }
 
-  if (!post || post.status !== 'PUBLISHED') {
+  if (!post) {
+    // Show error in development
+    if (process.env.NODE_ENV === 'development') {
+      return (
+        <>
+          <Header />
+          <div className="min-h-screen flex items-center justify-center p-4">
+            <div className="max-w-2xl w-full bg-red-50 border-2 border-red-200 rounded-lg p-8">
+              <h1 className="text-2xl font-bold text-red-900 mb-4">Blog Post Not Found</h1>
+              <p className="text-red-700 mb-4">Slug: <code className="bg-red-100 px-2 py-1 rounded">{params.slug}</code></p>
+              {error && (
+                <div className="mb-4">
+                  <p className="font-semibold text-red-800 mb-2">Error:</p>
+                  <pre className="bg-red-100 p-4 rounded text-sm overflow-auto">{error}</pre>
+                </div>
+              )}
+              <div className="mb-4">
+                <p className="font-semibold text-red-800 mb-2">Checklist:</p>
+                <ul className="list-disc list-inside space-y-1 text-red-700">
+                  <li>Is the backend running on port 3000?</li>
+                  <li>Is NEXT_PUBLIC_API_URL set correctly in .env?</li>
+                  <li>Does the blog post exist and is it PUBLISHED?</li>
+                  <li>Check backend logs for errors</li>
+                </ul>
+              </div>
+              <a href="/blog" className="inline-block px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+                Back to Blog
+              </a>
+            </div>
+          </div>
+          <Footer />
+        </>
+      )
+    }
+    notFound()
+  }
+  
+  if (post.status !== 'PUBLISHED') {
     notFound()
   }
 
