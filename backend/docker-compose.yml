@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: soothe_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: soothe_cms
+      POSTGRES_USER: soothe_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - soothe_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U soothe_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: soothe_backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://soothe_user:${DB_PASSWORD:-changeme}@postgres:5432/soothe_cms?schema=public
+      JWT_SECRET: ${JWT_SECRET:-change-this-secret-key}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-change-this-refresh-secret}
+      NODE_ENV: production
+      PORT: 3000
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3001}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+    networks:
+      - soothe_network
+
+volumes:
+  postgres_data:
+
+networks:
+  soothe_network:
+    driver: bridge
