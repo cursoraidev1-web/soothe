@@ -30,6 +30,9 @@ export function DataTable({
   totalPages = 1,
   onPageChange,
 }: DataTableProps) {
+  // Defensive array checking to prevent "data.map is not a function" errors
+  const safeData = Array.isArray(data) ? data : []
+
   if (loading) {
     return (
       <Card>
@@ -59,7 +62,7 @@ export function DataTable({
             </tr>
           </thead>
           <tbody>
-            {data.length === 0 ? (
+            {safeData.length === 0 ? (
               <tr>
                 <td
                   colSpan={columns.length}
@@ -69,7 +72,7 @@ export function DataTable({
                 </td>
               </tr>
             ) : (
-              data.map((row, index) => (
+              safeData.map((row, index) => (
                 <tr
                   key={row.id || index}
                   className="border-t hover:bg-muted/50 transition-colors"

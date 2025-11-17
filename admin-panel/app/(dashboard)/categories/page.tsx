@@ -59,7 +59,7 @@ export default function CategoriesListPage() {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => router.push(`/categories/${row.id}/edit`)}
+            onClick={() => router.push(`/categories/${row.slug}/edit`)}
           >
             <Edit className="h-4 w-4" />
           </Button>
