@@ -61,11 +61,43 @@ export default function CreateBlogPage() {
     setIsLoading(true)
 
     try {
+      // Convert content string to proper format
+      let contentToSend: any = content
+      
+      // If content looks like JSON, parse it
+      if (content && content.trim().startsWith('{')) {
+        try {
+          contentToSend = JSON.parse(content)
+        } catch (e) {
+          // If parsing fails, create a simple JSON structure
+          contentToSend = {
+            type: 'doc',
+            content: [
+              {
+                type: 'paragraph',
+                content: [{ type: 'text', text: content }]
+              }
+            ]
+          }
+        }
+      } else if (content) {
+        // Create proper JSON structure for plain text
+        contentToSend = {
+          type: 'doc',
+          content: [
+            {
+              type: 'paragraph',
+              content: [{ type: 'text', text: content }]
+            }
+          ]
+        }
+      }
+      
       const payload = {
         ...data,
         featuredImage: featuredImage || undefined,
         tags,
-        content,
+        content: contentToSend,
       }
       await api.post('/admin/blog', payload)
       toast.success('Post created successfully')

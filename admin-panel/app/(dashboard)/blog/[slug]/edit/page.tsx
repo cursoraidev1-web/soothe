@@ -61,14 +61,26 @@ export default function EditBlogPage() {
       setLoading(true)
       const post = await api.get<BlogPost>(`/blog/${slug}`)
       setPostId(post.id)
+      
+      // Convert content object to string for editing
+      let contentString = ''
+      if (post.content) {
+        if (typeof post.content === 'string') {
+          contentString = post.content
+        } else if (typeof post.content === 'object') {
+          // Convert JSON object to readable HTML or text
+          contentString = JSON.stringify(post.content, null, 2)
+        }
+      }
+      
       reset({
         title: post.title,
         slug: post.slug,
         excerpt: post.excerpt || '',
-        content: post.content,
+        content: contentString,
         status: post.status,
       })
-      setContent(post.content)
+      setContent(contentString)
       setFeaturedImage(post.featuredImage || '')
       setTags(post.tags || [])
     } catch (error) {
@@ -83,11 +95,24 @@ export default function EditBlogPage() {
     setIsLoading(true)
 
     try {
+      // Convert content string back to JSON if needed
+      let contentToSend: any = content
+      
+      // Try to parse as JSON if it looks like JSON
+      if (content && content.trim().startsWith('{')) {
+        try {
+          contentToSend = JSON.parse(content)
+        } catch (e) {
+          // If parsing fails, send as plain text
+          contentToSend = content
+        }
+      }
+      
       const payload = {
         ...data,
         featuredImage: featuredImage || undefined,
         tags,
-        content,
+        content: contentToSend,
       }
       await api.put(`/admin/blog/${postId}`, payload)
       toast.success('Post updated successfully')
