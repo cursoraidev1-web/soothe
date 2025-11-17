@@ -12,8 +12,9 @@ export const metadata = {
 export const revalidate = 3600
 
 export default async function InsightsPage() {
-  const posts = await frontendApi.getBlogPosts().catch(() => [])
-  const publishedPosts = posts.filter((post: any) => post.status === 'PUBLISHED')
+  const blogData = await frontendApi.getBlogPosts().catch(() => ({ data: [], meta: { totalPages: 1 } }))
+  const posts = Array.isArray(blogData) ? blogData : (blogData.data || [])
+  const publishedPosts = Array.isArray(posts) ? posts.filter((post: any) => post.status === 'PUBLISHED') : []
 
   return (
     <>

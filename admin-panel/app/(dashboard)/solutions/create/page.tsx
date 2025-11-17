@@ -64,9 +64,12 @@ export default function CreateSolutionPage() {
   const fetchCategories = async () => {
     try {
       const response = await api.get<SolutionCategory[]>('/solutions/categories')
-      setCategories(response)
+      const categoriesArray = Array.isArray(response) ? response : []
+      setCategories(categoriesArray)
     } catch (error) {
+      console.error('Failed to fetch categories:', error)
       toast.error('Failed to fetch categories')
+      setCategories([])
     }
   }
 

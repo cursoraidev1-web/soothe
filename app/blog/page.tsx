@@ -15,7 +15,8 @@ export default async function BlogPage({ searchParams }: any) {
   const blogData = await frontendApi.getBlogPosts(page).catch(() => ({ data: [], meta: { totalPages: 1 } }))
   
   // Filter published posts
-  const publishedPosts = blogData.data.filter((post: any) => post.status === 'PUBLISHED')
+  const postsArray = Array.isArray(blogData) ? blogData : (blogData.data || [])
+  const publishedPosts = Array.isArray(postsArray) ? postsArray.filter((post: any) => post.status === 'PUBLISHED') : []
 
   return (
     <>

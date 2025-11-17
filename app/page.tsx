@@ -15,7 +15,8 @@ export default async function Home() {
   ])
 
   // Filter published solutions and get top 3
-  const topSolutions = solutions.filter((s: any) => s.isPublished).slice(0, 3)
+  const solutionsArray = Array.isArray(solutions) ? solutions : []
+  const topSolutions = solutionsArray.filter((s: any) => s.isPublished).slice(0, 3)
 
   return (
     <>

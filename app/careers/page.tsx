@@ -45,7 +45,8 @@ const benefits = [
 
 export default async function CareersPage() {
   const careers = await frontendApi.getCareers().catch(() => [])
-  const openJobs = careers.filter((job: any) => job.status === 'OPEN')
+  const careersArray = Array.isArray(careers) ? careers : []
+  const openJobs = careersArray.filter((job: any) => job.status === 'OPEN')
 
   return (
     <>
