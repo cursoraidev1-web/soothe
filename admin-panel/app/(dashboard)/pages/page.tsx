@@ -77,7 +77,7 @@ export default function PagesListPage() {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => router.push(`/pages/${row.id}/edit`)}
+            onClick={() => router.push(`/pages/${row.slug}/edit`)}
           >
             <Edit className="h-4 w-4" />
           </Button>

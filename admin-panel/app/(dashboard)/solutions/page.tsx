@@ -81,7 +81,7 @@ export default function SolutionsListPage() {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => router.push(`/solutions/${row.id}/edit`)}
+            onClick={() => router.push(`/solutions/${row.slug}/edit`)}
           >
             <Edit className="h-4 w-4" />
           </Button>

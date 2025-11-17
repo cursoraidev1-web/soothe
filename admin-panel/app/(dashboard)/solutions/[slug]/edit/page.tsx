@@ -33,7 +33,8 @@ type SolutionForm = z.infer<typeof solutionSchema>
 export default function EditSolutionPage() {
   const router = useRouter()
   const params = useParams()
-  const id = params?.id as string
+  const slug = params?.slug as string
+  const [solutionId, setSolutionId] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState(true)
   const [categories, setCategories] = useState<SolutionCategory[]>([])
@@ -51,11 +52,11 @@ export default function EditSolutionPage() {
   })
 
   useEffect(() => {
-    if (id) {
+    if (slug) {
       fetchCategories()
       fetchSolution()
     }
-  }, [id])
+  }, [slug])
 
   const fetchCategories = async () => {
     try {
@@ -69,7 +70,8 @@ export default function EditSolutionPage() {
   const fetchSolution = async () => {
     try {
       setLoading(true)
-      const solution = await api.get<Solution>(`/solutions/${id}`)
+      const solution = await api.get<Solution>(`/solutions/${slug}`)
+      setSolutionId(solution.id)
       reset({
         title: solution.title,
         slug: solution.slug,
@@ -100,7 +102,7 @@ export default function EditSolutionPage() {
         features,
         benefits,
       }
-      await api.put(`/admin/solutions/${id}`, payload)
+      await api.put(`/admin/solutions/${solutionId}`, payload)
       toast.success('Solution updated successfully')
       router.push('/solutions')
     } catch (error: any) {
@@ -114,7 +116,7 @@ export default function EditSolutionPage() {
     if (!confirm('Are you sure you want to delete this solution?')) return
 
     try {
-      await api.delete(`/admin/solutions/${id}`)
+      await api.delete(`/admin/solutions/${solutionId}`)
       toast.success('Solution deleted successfully')
       router.push('/solutions')
     } catch (error) {

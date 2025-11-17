@@ -32,7 +32,8 @@ type BlogForm = z.infer<typeof blogSchema>
 export default function EditBlogPage() {
   const router = useRouter()
   const params = useParams()
-  const id = params?.id as string
+  const slug = params?.slug as string
+  const [postId, setPostId] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState(true)
   const [tags, setTags] = useState<string[]>([])
@@ -50,15 +51,16 @@ export default function EditBlogPage() {
   })
 
   useEffect(() => {
-    if (id) {
+    if (slug) {
       fetchPost()
     }
-  }, [id])
+  }, [slug])
 
   const fetchPost = async () => {
     try {
       setLoading(true)
-      const post = await api.get<BlogPost>(`/blog/${id}`)
+      const post = await api.get<BlogPost>(`/blog/${slug}`)
+      setPostId(post.id)
       reset({
         title: post.title,
         slug: post.slug,
@@ -87,7 +89,7 @@ export default function EditBlogPage() {
         tags,
         content,
       }
-      await api.put(`/admin/blog/${id}`, payload)
+      await api.put(`/admin/blog/${postId}`, payload)
       toast.success('Post updated successfully')
       router.push('/blog')
     } catch (error: any) {
@@ -101,7 +103,7 @@ export default function EditBlogPage() {
     if (!confirm('Are you sure you want to delete this post?')) return
 
     try {
-      await api.delete(`/admin/blog/${id}`)
+      await api.delete(`/admin/blog/${postId}`)
       toast.success('Post deleted successfully')
       router.push('/blog')
     } catch (error) {

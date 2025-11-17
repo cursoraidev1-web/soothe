@@ -13,22 +13,23 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { api } from '@/lib/api'
-import { Page } from '@/lib/types'
+import type { SolutionCategory } from '@/lib/types'
 
-const pageSchema = z.object({
-  title: z.string().min(1, 'Title is required'),
+const categorySchema = z.object({
+  name: z.string().min(1, 'Name is required'),
   slug: z.string().min(1, 'Slug is required'),
-  metaTitle: z.string().optional(),
-  metaDescription: z.string().optional(),
-  isPublished: z.boolean(),
+  description: z.string().optional(),
+  icon: z.string().optional(),
+  sortOrder: z.number(),
 })
 
-type PageForm = z.infer<typeof pageSchema>
+type CategoryForm = z.infer<typeof categorySchema>
 
-export default function EditPagePage() {
+export default function EditCategoryPage() {
   const router = useRouter()
   const params = useParams()
-  const id = params?.id as string
+  const slug = params?.slug as string
+  const [categoryId, setCategoryId] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState(true)
 
@@ -37,58 +38,59 @@ export default function EditPagePage() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<PageForm>({
-    resolver: zodResolver(pageSchema),
+  } = useForm<CategoryForm>({
+    resolver: zodResolver(categorySchema),
   })
 
   useEffect(() => {
-    if (id) {
-      fetchPage()
+    if (slug) {
+      fetchCategory()
     }
-  }, [id])
+  }, [slug])
 
-  const fetchPage = async () => {
+  const fetchCategory = async () => {
     try {
       setLoading(true)
-      const page = await api.get<Page>(`/pages/${id}`)
+      const category = await api.get<SolutionCategory>(`/solutions/categories/${slug}`)
+      setCategoryId(category.id)
       reset({
-        title: page.title,
-        slug: page.slug,
-        metaTitle: page.metaTitle || '',
-        metaDescription: page.metaDescription || '',
-        isPublished: page.isPublished,
+        name: category.name,
+        slug: category.slug,
+        description: category.description || '',
+        icon: category.icon || '',
+        sortOrder: category.sortOrder || 0,
       })
     } catch (error) {
-      toast.error('Failed to fetch page')
-      router.push('/pages')
+      toast.error('Failed to fetch category')
+      router.push('/categories')
     } finally {
       setLoading(false)
     }
   }
 
-  const onSubmit = async (data: PageForm) => {
+  const onSubmit = async (data: CategoryForm) => {
     setIsLoading(true)
 
     try {
-      await api.put(`/admin/pages/${id}`, data)
-      toast.success('Page updated successfully')
-      router.push('/pages')
+      await api.put(`/solutions/categories/${categoryId}`, data)
+      toast.success('Category updated successfully')
+      router.push('/categories')
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to update page')
+      toast.error(error.response?.data?.message || 'Failed to update category')
     } finally {
       setIsLoading(false)
     }
   }
 
   const handleDelete = async () => {
-    if (!confirm('Are you sure you want to delete this page?')) return
+    if (!confirm('Are you sure you want to delete this category?')) return
 
     try {
-      await api.delete(`/admin/pages/${id}`)
-      toast.success('Page deleted successfully')
-      router.push('/pages')
+      await api.delete(`/solutions/categories/${categoryId}`)
+      toast.success('Category deleted successfully')
+      router.push('/categories')
     } catch (error) {
-      toast.error('Failed to delete page')
+      toast.error('Failed to delete category')
     }
   }
 
@@ -104,8 +106,8 @@ export default function EditPagePage() {
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <div>
-            <h1 className="text-3xl font-bold">Edit Page</h1>
-            <p className="text-muted-foreground">Update page information</p>
+            <h1 className="text-3xl font-bold">Edit Category</h1>
+            <p className="text-muted-foreground">Update category information</p>
           </div>
         </div>
         <Button variant="destructive" onClick={handleDelete}>
@@ -117,57 +119,41 @@ export default function EditPagePage() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Page Information</CardTitle>
+            <CardTitle>Category Information</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="title">Title *</Label>
-              <Input id="title" {...register('title')} placeholder="About Us" />
-              {errors.title && (
-                <p className="text-sm text-destructive">{errors.title.message}</p>
+              <Label htmlFor="name">Name *</Label>
+              <Input id="name" {...register('name')} />
+              {errors.name && (
+                <p className="text-sm text-destructive">{errors.name.message}</p>
               )}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="slug">Slug *</Label>
-              <Input id="slug" {...register('slug')} placeholder="about-us" />
+              <Input id="slug" {...register('slug')} />
               {errors.slug && (
                 <p className="text-sm text-destructive">{errors.slug.message}</p>
               )}
             </div>
 
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="isPublished"
-                {...register('isPublished')}
-                className="h-4 w-4 rounded border-gray-300"
-              />
-              <Label htmlFor="isPublished">Published</Label>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>SEO Settings</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="metaTitle">Meta Title</Label>
+              <Label htmlFor="description">Description</Label>
+              <Textarea id="description" {...register('description')} />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="icon">Icon</Label>
+              <Input id="icon" {...register('icon')} />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="sortOrder">Sort Order</Label>
               <Input
-                id="metaTitle"
-                {...register('metaTitle')}
-                placeholder="Page meta title"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="metaDescription">Meta Description</Label>
-              <Textarea
-                id="metaDescription"
-                {...register('metaDescription')}
-                placeholder="Page meta description"
+                id="sortOrder"
+                type="number"
+                {...register('sortOrder', { valueAsNumber: true })}
               />
             </div>
           </CardContent>
