@@ -1,6 +1,10 @@
-'use client'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
-import { motion } from 'framer-motion'
+export const metadata = {
+  title: 'Inclusivity | SOOTHE Technologies',
+  description: 'Our commitment to building technology for everyone',
+}
 
 const commitments = [
   {
@@ -61,7 +65,9 @@ const commitments = [
 
 export default function InclusivityPage() {
   return (
-    <div className="pt-20">
+    <>
+      <Header />
+      <div>
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-primary-900 to-primary-950 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10" aria-hidden="true">
@@ -235,6 +241,8 @@ export default function InclusivityPage() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+      <Footer />
+    </>
   )
 }

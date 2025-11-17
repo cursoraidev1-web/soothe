@@ -1,7 +1,9 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { useState } from 'react'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+import { toast } from 'sonner'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -10,11 +12,45 @@ export default function ContactPage() {
     subject: '',
     message: '',
   })
+  const [submitting, setSubmitting] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log('Form submitted:', formData)
+    
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      toast.error('Please fill in all fields')
+      return
+    }
+
+    try {
+      setSubmitting(true)
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api/v1'
+      
+      const response = await fetch(`${API_URL}/contact-submissions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form')
+      }
+
+      toast.success('Message sent successfully! We\'ll get back to you soon.')
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+      })
+    } catch (error) {
+      console.error('Failed to submit form:', error)
+      toast.error('Failed to send message. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -25,41 +61,32 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="pt-20">
-      {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-neutral-50 via-primary-50 to-accent-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center max-w-4xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-          >
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
-              Let's{' '}
-              <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">
-                Connect
-              </span>
-            </h1>
-            <p className="text-xl text-neutral-700 leading-relaxed">
-              Have a question, idea, or partnership opportunity? We'd love to hear from you.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+    <>
+      <Header />
+      <div>
+        {/* Hero Section */}
+        <section className="py-20 bg-gradient-to-br from-neutral-50 via-primary-50 to-accent-50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-4xl mx-auto">
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
+                Let's{' '}
+                <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">
+                  Connect
+                </span>
+              </h1>
+              <p className="text-xl text-neutral-700 leading-relaxed">
+                Have a question, idea, or partnership opportunity? We'd love to hear from you.
+              </p>
+            </div>
+          </div>
+        </section>
 
-      {/* Contact Form & Info */}
-      <section className="py-20 bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Contact Info */}
-            <motion.div
-              className="lg:col-span-1 space-y-8"
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
+        {/* Contact Form & Info */}
+        <section className="py-20 bg-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+              {/* Contact Info */}
+              <div className="lg:col-span-1 space-y-8">
               <div>
                 <h2 className="font-display text-2xl font-bold text-neutral-900 mb-6">
                   Get in Touch
@@ -116,16 +143,10 @@ export default function ContactPage() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
-            {/* Contact Form */}
-            <motion.div
-              className="lg:col-span-2"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
+              {/* Contact Form */}
+              <div className="lg:col-span-2">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
@@ -203,9 +224,10 @@ export default function ContactPage() {
                 <div>
                   <button
                     type="submit"
-                    className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-primary-600 to-accent-500 text-white font-semibold rounded-lg hover:shadow-lg transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2"
+                    disabled={submitting}
+                    className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-primary-600 to-accent-500 text-white font-semibold rounded-lg hover:shadow-lg transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Send Message
+                    {submitting ? 'Sending...' : 'Send Message'}
                   </button>
                 </div>
 
@@ -213,31 +235,27 @@ export default function ContactPage() {
                   <span className="text-accent-500">*</span> Required fields
                 </p>
               </form>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Additional Info */}
-      <section className="py-20 bg-neutral-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <h2 className="font-display text-3xl font-bold text-neutral-900 mb-4">
-              Response Time
-            </h2>
-            <p className="text-lg text-neutral-700">
-              We aim to respond to all inquiries within 24-48 hours during business days. 
-              For urgent accessibility-related questions, please mark your message as high priority.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-    </div>
+        {/* Additional Info */}
+        <section className="py-20 bg-neutral-50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto">
+              <h2 className="font-display text-3xl font-bold text-neutral-900 mb-4">
+                Response Time
+              </h2>
+              <p className="text-lg text-neutral-700">
+                We aim to respond to all inquiries within 24-48 hours during business days. 
+                For urgent accessibility-related questions, please mark your message as high priority.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+      <Footer />
+    </>
   )
 }
