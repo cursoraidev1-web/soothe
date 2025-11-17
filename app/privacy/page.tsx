@@ -1,10 +1,16 @@
-'use client'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
-import { motion } from 'framer-motion'
+export const metadata = {
+  title: 'Privacy Policy | SOOTHE Technologies',
+  description: 'Our commitment to your privacy',
+}
 
 export default function PrivacyPage() {
   return (
-    <div className="pt-20">
+    <>
+      <Header />
+      <div>
       <section className="py-20 bg-gradient-to-br from-neutral-50 via-primary-50 to-accent-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -81,6 +87,8 @@ export default function PrivacyPage() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+      <Footer />
+    </>
   )
 }

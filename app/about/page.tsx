@@ -1,6 +1,10 @@
-'use client'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
-import { motion } from 'framer-motion'
+export const metadata = {
+  title: 'About Us | SOOTHE Technologies',
+  description: 'Technology that empowers everyone',
+}
 
 const values = [
   {
@@ -42,42 +46,34 @@ const team = [
 
 export default function AboutPage() {
   return (
-    <div className="pt-20">
-      {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-neutral-50 via-primary-50 to-accent-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center max-w-4xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-          >
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
-              Technology That{' '}
-              <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">
-                Empowers
-              </span>{' '}
-              Everyone
-            </h1>
-            <p className="text-xl text-neutral-700 leading-relaxed">
-              At SOOTHE TECHNOLOGIES, we believe technology should be a bridge, not a barrier. 
-              Our mission is to simplify everyday life through innovative, accessible, and user-centric 
-              digital solutions that truly make a difference.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+    <>
+      <Header />
+      <div>
+        {/* Hero Section */}
+        <section className="py-20 bg-gradient-to-br from-neutral-50 via-primary-50 to-accent-50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-4xl mx-auto">
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
+                Technology That{' '}
+                <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">
+                  Empowers
+                </span>{' '}
+                Everyone
+              </h1>
+              <p className="text-xl text-neutral-700 leading-relaxed">
+                At SOOTHE TECHNOLOGIES, we believe technology should be a bridge, not a barrier. 
+                Our mission is to simplify everyday life through innovative, accessible, and user-centric 
+                digital solutions that truly make a difference.
+              </p>
+            </div>
+          </div>
+        </section>
 
-      {/* Why We Exist */}
-      <section className="py-20 bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
+        {/* Why We Exist */}
+        <section className="py-20 bg-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
               <h2 className="font-display text-3xl sm:text-4xl font-bold text-neutral-900 mb-6">
                 Why We Exist
               </h2>
@@ -98,15 +94,9 @@ export default function AboutPage() {
                   and makes everyday life genuinely easier.
                 </p>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              className="relative aspect-square rounded-2xl bg-gradient-to-br from-primary-100 to-accent-100 p-8 flex items-center justify-center"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
+              <div className="relative aspect-square rounded-2xl bg-gradient-to-br from-primary-100 to-accent-100 p-8 flex items-center justify-center">
               <div className="text-center">
                 <div className="text-6xl font-display font-bold bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent mb-4">
                   100%
@@ -118,90 +108,72 @@ export default function AboutPage() {
                   Not a feature. A foundation.
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Our Values */}
-      <section className="py-20 bg-neutral-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+        {/* Our Values */}
+        <section className="py-20 bg-neutral-50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-neutral-900 mb-4">
               Our Core Values
             </h2>
             <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
               These principles guide every decision we make and every product we build.
             </p>
-          </motion.div>
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {values.map((value, index) => (
-              <motion.div
-                key={value.title}
-                className="p-8 rounded-2xl bg-white border border-neutral-200 hover:border-primary-300 hover:shadow-lg transition-all"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-              >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {values.map((value) => (
+                <div
+                  key={value.title}
+                  className="p-8 rounded-2xl bg-white border border-neutral-200 hover:border-primary-300 hover:shadow-lg transition-all"
+                >
                 <h3 className="font-display text-2xl font-bold text-neutral-900 mb-3">
                   {value.title}
                 </h3>
                 <p className="text-neutral-700 leading-relaxed">
                   {value.description}
                 </p>
-              </motion.div>
-            ))}
+              </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Our Team */}
-      <section className="py-20 bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+        {/* Our Team */}
+        <section className="py-20 bg-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-neutral-900 mb-4">
               Meet the Team
             </h2>
             <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
               A passionate, diverse team united by a shared mission to make technology work for everyone.
             </p>
-          </motion.div>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((department, index) => (
-              <motion.div
-                key={department.name}
-                className="p-6 rounded-xl bg-gradient-to-br from-primary-50 to-accent-50 border border-primary-100"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-              >
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {team.map((department) => (
+                <div
+                  key={department.name}
+                  className="p-6 rounded-xl bg-gradient-to-br from-primary-50 to-accent-50 border border-primary-100"
+                >
                 <h3 className="font-display text-xl font-bold text-neutral-900 mb-2">
                   {department.name}
                 </h3>
                 <p className="text-sm text-neutral-700">
                   {department.description}
                 </p>
-              </motion.div>
-            ))}
+              </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+      <Footer />
+    </>
   )
 }
