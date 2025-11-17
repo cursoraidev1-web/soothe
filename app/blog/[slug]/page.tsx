@@ -72,7 +72,7 @@ export default async function BlogPostPage({ params }: any) {
           )}
 
           <div className="flex items-center gap-6 text-gray-600 mb-8 pb-8 border-b">
-            {post.author && (
+            {post.author && typeof post.author === 'object' && (
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
                   {post.author.firstName?.[0]}{post.author.lastName?.[0]}

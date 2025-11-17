@@ -52,8 +52,8 @@ export default async function CareersPage() {
     <>
       <Header />
       <div>
-      {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-neutral-50 via-primary-50 to-accent-50">
+        {/* Hero Section */}
+        <section className="py-20 bg-gradient-to-br from-neutral-50 via-primary-50 to-accent-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
