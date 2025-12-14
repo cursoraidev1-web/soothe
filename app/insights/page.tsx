@@ -134,7 +134,7 @@ export default async function InsightsPage() {
           </div>
         </section>
       </div>
-      {/* <Footer /> */}
+      {/* <Footer />Huii */}
     </>
   )
 }
