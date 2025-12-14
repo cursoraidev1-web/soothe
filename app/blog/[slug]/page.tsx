@@ -1,3 +1,4 @@
+import { renderTiptapContent } from '@/lib/render-tiptap'
 import { frontendApi } from '@/lib/frontend-api'
 import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
@@ -32,6 +33,7 @@ export default async function BlogPostPage({ params }: any) {
     console.error('Failed to fetch blog post:', err)
     error = err.message || 'Failed to fetch post'
   }
+  console.log("INSIGHTS POST:", post)
 
   if (!post) {
     // Show error in development
@@ -74,6 +76,9 @@ export default async function BlogPostPage({ params }: any) {
     notFound()
   }
 
+  const html = renderTiptapContent(post.content)
+  
+  console.log(html);
   return (
     <>
       <Header />
@@ -147,7 +152,7 @@ export default async function BlogPostPage({ params }: any) {
 
           <article 
             className="prose prose-lg max-w-none prose-headings:font-bold prose-h2:text-3xl prose-h3:text-2xl prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg prose-img:shadow-lg"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: html }}
           />
 
           {post.tags && post.tags.length > 0 && (

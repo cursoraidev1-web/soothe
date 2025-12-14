@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useTheme } from 'next-themes'
 import { Moon, Sun } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -11,6 +12,13 @@ export function Header() {
     <header className="sticky top-0 z-20 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-16 items-center justify-between px-6">
         <div className="flex items-center gap-4">
+          <Image
+            src="/logo/logomark.png"
+            alt="SOOHE TECHNOLOGIES"
+            width={120}
+            height={120}
+            className="h-[7.5rem] w-[7.5rem]"
+          />
           <h2 className="text-lg font-semibold">Admin Dashboard</h2>
         </div>
 

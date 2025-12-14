@@ -9,33 +9,68 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Sophisticated palette: Deep plum base with warm coral accent
+        // SOOHE TECHNOLOGIES Brand Colors
+        // Primary: Deep Purple (#770F5B)
         primary: {
-          50: '#faf5f8',
-          100: '#f5ebf1',
-          200: '#edd9e5',
-          300: '#dfbbd1',
-          400: '#cb91b5',
-          500: '#b76d9a',
-          600: '#9f507d',
-          700: '#864066',
-          800: '#703756',
+          50: '#faf5f9',
+          100: '#f5ebf3',
+          200: '#edd6e8',
+          300: '#dfb5d6',
+          400: '#cb8abd',
+          500: '#b76da3',
+          600: '#9f5088',
+          700: '#86406e',
+          800: '#70375a',
           900: '#5f324a',
-          950: '#3a1a2c', // Deep plum base
+          950: '#770F5B', // Base Deep Purple
+          DEFAULT: '#770F5B',
         },
+        // Secondary: Vivid Purple (#FF2BD0)
+        secondary: {
+          50: '#fff5fd',
+          100: '#ffe8fb',
+          200: '#ffd5f7',
+          300: '#ffb6f0',
+          400: '#ff8ae6',
+          500: '#ff5dd9',
+          600: '#FF2BD0', // Base Vivid Purple
+          700: '#e61fb8',
+          800: '#c41a9a',
+          900: '#a2177e',
+          950: '#7a1259',
+          DEFAULT: '#FF2BD0',
+        },
+        // Soft Beige (#DCCBB8)
+        beige: {
+          50: '#faf9f7',
+          100: '#f5f2ed',
+          200: '#ede6d9',
+          300: '#e2d4c0',
+          400: '#DCCBB8', // Base Soft Beige
+          500: '#c9b8a3',
+          600: '#b5a38d',
+          700: '#9d8a72',
+          800: '#7f6f5c',
+          900: '#66584a',
+          950: '#3d342c',
+          DEFAULT: '#DCCBB8',
+        },
+        // Accent: Using Vivid Purple as accent
         accent: {
-          50: '#fff5f3',
-          100: '#ffe8e3',
-          200: '#ffd5cc',
-          300: '#ffb6a8',
-          400: '#ff8974',
-          500: '#fc6447', // Warm coral accent
-          600: '#e94323',
-          700: '#c43519',
-          800: '#a22f18',
-          900: '#862d1c',
-          950: '#49140a',
+          50: '#fff5fd',
+          100: '#ffe8fb',
+          200: '#ffd5f7',
+          300: '#ffb6f0',
+          400: '#ff8ae6',
+          500: '#ff5dd9',
+          600: '#FF2BD0', // Base Vivid Purple
+          700: '#e61fb8',
+          800: '#c41a9a',
+          900: '#a2177e',
+          950: '#7a1259',
+          DEFAULT: '#FF2BD0',
         },
+        // Neutral: Updated to use Midnight Black (#140211) as base
         neutral: {
           50: '#fafafa',
           100: '#f5f5f5',
@@ -47,7 +82,7 @@ const config: Config = {
           700: '#404040',
           800: '#262626',
           900: '#171717',
-          950: '#0a0a0a', // Rich charcoal
+          950: '#140211', // Midnight Black
         },
       },
       fontFamily: {

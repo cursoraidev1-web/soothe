@@ -12,13 +12,15 @@ export const revalidate = 600
 
 export default async function BlogPage({ searchParams }: any) {
   const page = searchParams?.page || 1
-  const blogData = await frontendApi.getBlogPosts(page).catch(() => ({ data: [], meta: { totalPages: 1 } }))
-  
-  // Filter published posts
-  const postsArray = Array.isArray(blogData) ? blogData : (blogData.data || [])
-  const publishedPosts = Array.isArray(postsArray) ? postsArray.filter((post: any) => post.status === 'PUBLISHED') : []
+  const blogData = await frontendApi
+    .getBlogPosts(page)
+    .catch(() => ({ data: [], meta: { totalPages: 1 } }))
+
+  const postsArray = Array.isArray(blogData) ? blogData : blogData.data || []
+  const publishedPosts = postsArray.filter((post: any) => post.status === 'PUBLISHED')
 
   return (
+    const html = renderTiptapContent(post.content)
     <>
       <Header />
       <main className="min-h-screen">
@@ -32,13 +34,16 @@ export default async function BlogPage({ searchParams }: any) {
         <div className="container mx-auto px-4 py-16">
           {publishedPosts.length === 0 ? (
             <div className="text-center py-16">
-              <p className="text-xl text-gray-600">No blog posts available yet. Check back soon!</p>
+              <p className="text-xl text-gray-600">
+                No blog posts available yet. Check back soon!
+              </p>
             </div>
           ) : (
             <>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {publishedPosts.map((post: any) => (
                   <article key={post.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+
                     {post.featuredImage && (
                       <Link href={`/blog/${post.slug}`}>
                         <img
@@ -48,8 +53,9 @@ export default async function BlogPage({ searchParams }: any) {
                         />
                       </Link>
                     )}
+
                     <div className="p-6">
-                      {post.tags && post.tags.length > 0 && (
+                      {post.tags?.length > 0 && (
                         <div className="flex flex-wrap gap-2 mb-3">
                           {post.tags.slice(0, 2).map((tag: string, i: number) => (
                             <span
@@ -61,30 +67,32 @@ export default async function BlogPage({ searchParams }: any) {
                           ))}
                         </div>
                       )}
-                      
+
                       <h2 className="text-2xl font-bold mb-3 hover:text-blue-600 transition-colors">
                         <Link href={`/blog/${post.slug}`}>
                           {post.title}
                         </Link>
                       </h2>
-                      
+
                       {post.excerpt && (
                         <p className="text-gray-600 mb-4 line-clamp-3">{post.excerpt}</p>
                       )}
-                      
+
                       <div className="flex items-center justify-between text-sm text-gray-500">
                         <div className="flex items-center gap-4">
+
                           {post.author && (
                             <span>
                               By {post.author.firstName} {post.author.lastName}
                             </span>
                           )}
+
                           {post.readingTime && (
                             <span>• {post.readingTime} min read</span>
                           )}
                         </div>
                       </div>
-                      
+
                       <Link
                         href={`/blog/${post.slug}`}
                         className="mt-4 inline-block text-blue-600 font-semibold hover:underline"
@@ -96,7 +104,6 @@ export default async function BlogPage({ searchParams }: any) {
                 ))}
               </div>
 
-              {/* Pagination */}
               {blogData.meta.totalPages > 1 && (
                 <div className="flex justify-center gap-2 mt-12">
                   {page > 1 && (
@@ -107,24 +114,27 @@ export default async function BlogPage({ searchParams }: any) {
                       Previous
                     </Link>
                   )}
-                  
-                  {Array.from({ length: Math.min(blogData.meta.totalPages, 5) }, (_, i) => {
-                    const pageNum = i + 1
-                    return (
-                      <Link
-                        key={pageNum}
-                        href={`/blog?page=${pageNum}`}
-                        className={`px-4 py-2 rounded ${
-                          pageNum === Number(page)
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-gray-200 hover:bg-gray-300'
-                        }`}
-                      >
-                        {pageNum}
-                      </Link>
-                    )
-                  })}
-                  
+
+                  {Array.from(
+                    { length: Math.min(blogData.meta.totalPages, 5) },
+                    (_, i) => {
+                      const pageNum = i + 1
+                      return (
+                        <Link
+                          key={pageNum}
+                          href={`/blog?page=${pageNum}`}
+                          className={`px-4 py-2 rounded ${
+                            pageNum === Number(page)
+                              ? 'bg-blue-600 text-white'
+                              : 'bg-gray-200 hover:bg-gray-300'
+                          }`}
+                        >
+                          {pageNum}
+                        </Link>
+                      )
+                    }
+                  )}
+
                   {page < blogData.meta.totalPages && (
                     <Link
                       href={`/blog?page=${Number(page) + 1}`}
@@ -139,6 +149,7 @@ export default async function BlogPage({ searchParams }: any) {
           )}
         </div>
       </main>
+
       <Footer />
     </>
   )

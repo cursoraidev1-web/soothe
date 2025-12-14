@@ -72,7 +72,12 @@ export default async function InsightsPage() {
                           </p>
                         )}
                         <div className="flex items-center text-sm text-neutral-600 space-x-4">
-                          {post.author && <span>By {post.author}</span>}
+                          {post.author && typeof post.author === 'object' && (
+  <span>
+    By {post.author.firstName} {post.author.lastName}
+  </span>
+)}
+
                           {post.readTime && (
                             <>
                               <span>•</span>
@@ -129,7 +134,7 @@ export default async function InsightsPage() {
           </div>
         </section>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }

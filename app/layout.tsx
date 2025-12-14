@@ -18,14 +18,32 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'SOOTHE TECHNOLOGIES LIMITED - Making Life Easier, One Solution at a Time',
+  title: 'SOOHE TECHNOLOGIES - Making Life Easier, One Solution at a Time',
   description: 'Innovative, accessible, and user-centric apps and websites that simplify everyday life. Focusing on productivity, wellness, and inclusivity.',
   keywords: 'accessibility, inclusive design, productivity apps, wellness technology, assistive technology, smart living',
-  authors: [{ name: 'SOOTHE TECHNOLOGIES LIMITED' }],
+  authors: [{ name: 'SOOHE TECHNOLOGIES' }],
+  icons: {
+    icon: '/logo/favicon.ico',
+    apple: '/logo/apple-touch-icon.png',
+  },
   openGraph: {
-    title: 'SOOTHE TECHNOLOGIES LIMITED',
+    title: 'SOOHE TECHNOLOGIES',
     description: 'Making life easier. Inclusive. One solution at a time.',
     type: 'website',
+    images: [
+      {
+        url: '/logo/logo-horizontal-dark.png',
+        width: 1200,
+        height: 630,
+        alt: 'SOOHE TECHNOLOGIES Logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'SOOHE TECHNOLOGIES',
+    description: 'Making life easier. Inclusive. One solution at a time.',
+    images: ['/logo/logo-horizontal-dark.png'],
   },
 }
 

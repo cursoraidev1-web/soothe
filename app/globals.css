@@ -16,14 +16,14 @@
     @apply bg-neutral-50 text-neutral-900 antialiased;
   }
 
-  /* Focus visible styles for accessibility */
+  /* Focus visible styles for accessibility - using brand primary color */
   *:focus-visible {
-    @apply outline-none ring-2 ring-accent-500 ring-offset-2;
+    @apply outline-none ring-2 ring-primary-600 ring-offset-2;
   }
 
-  /* Skip to main content link for keyboard navigation */
+  /* Skip to main content link for keyboard navigation - using brand primary */
   .skip-to-main {
-    @apply absolute left-0 top-0 z-50 -translate-y-full bg-accent-500 px-4 py-2 text-white focus:translate-y-0;
+    @apply absolute left-0 top-0 z-50 -translate-y-full bg-primary-600 px-4 py-2 text-white focus:translate-y-0;
   }
 }
 
@@ -51,11 +51,11 @@
   }
 }
 
-/* High contrast mode class (user-activated) */
+/* High contrast mode class (user-activated) - using brand colors */
 .high-contrast {
   --tw-prose-body: theme('colors.neutral.900');
   --tw-prose-headings: theme('colors.neutral.950');
-  --tw-prose-links: theme('colors.accent.700');
+  --tw-prose-links: theme('colors.primary.700');
 }
 
 .high-contrast body {

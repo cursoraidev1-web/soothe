@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { useSidebarStore, useAuthStore } from '@/lib/store'
@@ -60,7 +61,13 @@ export function Sidebar() {
     <>
       {/* Mobile menu button */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-background border-b p-4 flex items-center justify-between">
-        <h1 className="text-xl font-bold">SOOTHE CMS</h1>
+        <Image
+          src="/logo/logo-horizontal-dark.png"
+          alt="SOOHE TECHNOLOGIES"
+          width={300}
+          height={120}
+          className="h-[7.5rem] w-auto"
+        />
         <Button variant="ghost" size="icon" onClick={toggle}>
           {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </Button>
@@ -77,7 +84,13 @@ export function Sidebar() {
         <div className="flex h-full flex-col">
           {/* Logo */}
           <div className="flex h-16 items-center border-b px-6">
-            <h1 className="text-xl font-bold">SOOTHE CMS</h1>
+            <Image
+              src="/logo/logo-horizontal-dark.png"
+              alt="SOOHE TECHNOLOGIES"
+              width={140}
+              height={32}
+              className="h-8 w-auto"
+            />
           </div>
 
           {/* Navigation */}

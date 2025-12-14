@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 const footerNavigation = {
   company: [
@@ -27,18 +28,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-primary-600 to-accent-500 flex items-center justify-center">
-                <span className="text-white font-display font-bold text-xl" aria-hidden="true">S</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-display font-bold text-lg leading-tight text-white">
-                  SOOTHE
-                </span>
-                <span className="text-xs text-neutral-400 leading-tight">
-                  TECHNOLOGIES
-                </span>
-              </div>
+            <div className="flex items-center mb-4">
+              <Image
+                src="/logo/logo-horizontal-light.png"
+                alt="SOOHE TECHNOLOGIES"
+                width={300}
+                height={120}
+                className="h-[7.5rem] w-auto"
+              />
             </div>
             <p className="text-sm text-neutral-400 mt-4 max-w-xs">
               Making life easier. Inclusive. One solution at a time.

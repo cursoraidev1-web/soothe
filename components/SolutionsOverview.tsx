@@ -7,25 +7,25 @@ const solutions = [
   {
     title: 'Productivity',
     description: 'Tools that help you work smarter, not harder. Streamline tasks, organize your day, and achieve more with less stress.',
-    gradient: 'from-purple-600 to-pink-600',
+    gradient: 'from-primary-600 to-primary-800',
     href: '/solutions#productivity',
   },
   {
     title: 'Wellness',
     description: 'Digital companions for your physical and mental wellbeing. Track, improve, and maintain a healthier, more balanced life.',
-    gradient: 'from-accent-600 to-orange-600',
+    gradient: 'from-secondary-600 to-secondary-800',
     href: '/solutions#wellness',
   },
   {
     title: 'Assistive Technology',
     description: 'Empowering solutions that remove barriers and create equal access for people of all abilities.',
-    gradient: 'from-primary-600 to-purple-600',
+    gradient: 'from-primary-600 to-secondary-600',
     href: '/solutions#assistive',
   },
   {
     title: 'Smart Living',
     description: 'Connected experiences that make your home and daily routines more intuitive, efficient, and enjoyable.',
-    gradient: 'from-pink-600 to-accent-600',
+    gradient: 'from-secondary-500 to-primary-700',
     href: '/solutions#smart-living',
   },
 ]

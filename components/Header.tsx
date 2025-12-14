@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 const navigation = [
@@ -38,18 +39,15 @@ export default function Header() {
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2 group">
-              <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-primary-600 to-accent-500 flex items-center justify-center transition-transform group-hover:scale-105">
-                <span className="text-white font-display font-bold text-xl" aria-hidden="true">S</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-display font-bold text-lg leading-tight text-neutral-900">
-                  SOOTHE
-                </span>
-                <span className="text-xs text-neutral-600 leading-tight">
-                  TECHNOLOGIES
-                </span>
-              </div>
+            <Link href="/" className="flex items-center group">
+              <Image
+                src="/logo/logo-horizontal-dark.png"
+                alt="SOOHE TECHNOLOGIES"
+                width={300}
+                height={120}
+                className="h-[7.5rem] w-auto transition-opacity group-hover:opacity-80"
+                priority
+              />
             </Link>
           </div>
 

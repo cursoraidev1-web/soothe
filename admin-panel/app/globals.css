@@ -5,47 +5,47 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 315 81% 4%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 315 81% 4%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --popover-foreground: 315 81% 4%;
+    --primary: 318 77% 26%; /* Deep Purple #770F5B */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 312 100% 58%; /* Vivid Purple #FF2BD0 */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 32 33% 95%;
+    --muted-foreground: 315 81% 20%;
+    --accent: 312 100% 58%; /* Vivid Purple #FF2BD0 */
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    --border: 32 33% 85%;
+    --input: 32 33% 85%;
+    --ring: 318 77% 26%; /* Deep Purple for focus rings */
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --background: 315 81% 4%; /* Midnight Black #140211 */
+    --foreground: 32 33% 95%; /* Soft Beige for text */
+    --card: 315 81% 6%;
+    --card-foreground: 32 33% 95%;
+    --popover: 315 81% 6%;
+    --popover-foreground: 32 33% 95%;
+    --primary: 318 77% 35%; /* Lighter Deep Purple for dark mode */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 312 100% 65%; /* Lighter Vivid Purple for dark mode */
+    --secondary-foreground: 315 81% 4%;
+    --muted: 315 81% 10%;
+    --muted-foreground: 32 33% 80%;
+    --accent: 312 100% 65%; /* Vivid Purple */
+    --accent-foreground: 315 81% 4%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --border: 315 81% 15%;
+    --input: 315 81% 15%;
+    --ring: 318 77% 35%; /* Deep Purple for focus rings */
   }
 }
 

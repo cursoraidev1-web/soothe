@@ -43,12 +43,12 @@ const benefits = [
   },
 ]
 
-export default async function CareersPage() {
+export default async function CareersPage(){
   const careers = await frontendApi.getCareers().catch(() => [])
   const careersArray = Array.isArray(careers) ? careers : []
   const openJobs = careersArray.filter((job: any) => job.status === 'OPEN')
 
-  return (
+  return(
     <>
       <Header />
       <div>
@@ -70,7 +70,6 @@ export default async function CareersPage() {
           </div>
         </div>
       </section>
-
       {/* Why Join Us */}
       <section className="py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -101,7 +100,6 @@ export default async function CareersPage() {
           </div>
         </div>
       </section>
-
       {/* Our Culture */}
       <section className="py-20 bg-neutral-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -143,7 +141,6 @@ export default async function CareersPage() {
           </div>
         </div>
       </section>
-
       {/* Open Positions */}
       <section className="py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -234,6 +231,7 @@ export default async function CareersPage() {
         </div>
       </section>
       <Footer />
+      </div>
     </>
   )
 }
