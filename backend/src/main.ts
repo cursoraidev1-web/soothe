@@ -72,13 +72,16 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
   
-  const port = configService.get('PORT', 3000);
-  await app.listen(port);
-  
-  console.log(`\n🚀 SOOTHE CMS Backend is running!`);
-  console.log(`📍 Server: http://localhost:${port}`);
-  console.log(`📚 API Docs: http://localhost:${port}/api/docs`);
-  console.log(`🔒 Environment: ${configService.get('NODE_ENV', 'development')}`);
+  // Only listen if not running in Lambda
+  if (process.env.AWS_LAMBDA_FUNCTION_NAME === undefined) {
+    const port = configService.get('PORT', 3000);
+    await app.listen(port);
+    
+    console.log(`\n🚀 SOOTHE CMS Backend is running!`);
+    console.log(`📍 Server: http://localhost:${port}`);
+    console.log(`📚 API Docs: http://localhost:${port}/api/docs`);
+    console.log(`🔒 Environment: ${configService.get('NODE_ENV', 'development')}`);
+  }
 }
 
 bootstrap();

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { toast } from 'sonner'
@@ -68,32 +67,17 @@ export default function ContactPage() {
         {/* Hero Section */}
         <section className="py-20 bg-gradient-to-br from-neutral-50 via-primary-50 to-accent-50">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <motion.div
-              className="text-center max-w-4xl mx-auto"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <motion.h1
-                className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.8 }}
-              >
+            <div className="text-center max-w-4xl mx-auto">
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
                 Let's{' '}
                 <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">
                   Connect
                 </span>
-              </motion.h1>
-              <motion.p
-                className="text-xl text-neutral-700 leading-relaxed"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.8 }}
-              >
+              </h1>
+              <p className="text-xl text-neutral-700 leading-relaxed">
                 Have a question, idea, or partnership opportunity? We'd love to hear from you.
-              </motion.p>
-            </motion.div>
+              </p>
+            </div>
           </div>
         </section>
 
@@ -102,13 +86,7 @@ export default function ContactPage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               {/* Contact Info */}
-              <motion.div
-                className="lg:col-span-1 space-y-8"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7 }}
-              >
+              <div className="lg:col-span-1 space-y-8">
               <div>
                 <h2 className="font-display text-2xl font-bold text-neutral-900 mb-6">
                   Get in Touch
@@ -121,13 +99,7 @@ export default function ContactPage() {
 
               {/* Contact Methods */}
               <div className="space-y-6">
-                <motion.div
-                  className="flex items-start"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1, duration: 0.6 }}
-                >
+                <div className="flex items-start">
                   <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-primary-600 to-accent-500 flex items-center justify-center text-white">
                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -139,15 +111,9 @@ export default function ContactPage() {
                       hello@soothetech.com
                     </a>
                   </div>
-                </motion.div>
+                </div>
 
-                <motion.div
-                  className="flex items-start"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2, duration: 0.6 }}
-                >
+                <div className="flex items-start">
                   <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-primary-600 to-accent-500 flex items-center justify-center text-white">
                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -161,15 +127,9 @@ export default function ContactPage() {
                       Headquarters: To Be Announced
                     </p>
                   </div>
-                </motion.div>
+                </div>
 
-                <motion.div
-                  className="flex items-start"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3, duration: 0.6 }}
-                >
+                <div className="flex items-start">
                   <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-primary-600 to-accent-500 flex items-center justify-center text-white">
                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -181,18 +141,12 @@ export default function ContactPage() {
                       View Open Positions
                     </a>
                   </div>
-                </motion.div>
+                </div>
               </div>
-            </motion.div>
+            </div>
 
               {/* Contact Form */}
-              <motion.div
-                className="lg:col-span-2"
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7 }}
-              >
+              <div className="lg:col-span-2">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
@@ -281,7 +235,7 @@ export default function ContactPage() {
                   <span className="text-accent-500">*</span> Required fields
                 </p>
               </form>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -289,33 +243,15 @@ export default function ContactPage() {
         {/* Additional Info */}
         <section className="py-20 bg-neutral-50">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <motion.div
-              className="text-center max-w-3xl mx-auto"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
-              <motion.h2
-                className="font-display text-3xl font-bold text-neutral-900 mb-4"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-              >
+            <div className="text-center max-w-3xl mx-auto">
+              <h2 className="font-display text-3xl font-bold text-neutral-900 mb-4">
                 Response Time
-              </motion.h2>
-              <motion.p
-                className="text-lg text-neutral-700"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-              >
+              </h2>
+              <p className="text-lg text-neutral-700">
                 We aim to respond to all inquiries within 24-48 hours during business days. 
                 For urgent accessibility-related questions, please mark your message as high priority.
-              </motion.p>
-            </motion.div>
+              </p>
+            </div>
           </div>
         </section>
       </div>

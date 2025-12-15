@@ -2,32 +2,14 @@ import { Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 import { MediaService } from './media.service';
 import { MediaController } from './media.controller';
-import { diskStorage } from 'multer';
-import * as path from 'path';
-import * as fs from 'fs';
-
-// Ensure uploads directory exists
-const uploadPath = './uploads/media';
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath, { recursive: true });
-}
+import { memoryStorage } from 'multer';
 
 @Module({
   imports: [
     MulterModule.register({
-      storage: diskStorage({
-        destination: (req, file, cb) => {
-          cb(null, uploadPath);
-        },
-        filename: (req, file, cb) => {
-          const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const ext = path.extname(file.originalname);
-          const name = path.basename(file.originalname, ext);
-          cb(null, `${name}-${uniqueSuffix}${ext}`);
-        },
-      }),
+      storage: memoryStorage(), // Store files in memory for S3 upload
       limits: {
-        fileSize: parseInt(process.env.MAX_FILE_SIZE || '5242880', 10), // 5MB default
+        fileSize: parseInt(process.env.MAX_FILE_SIZE || '5242880', 10), // 5MB default (Lambda limit is 6MB)
       },
       fileFilter: (req, file, cb) => {
         const allowedMimes = [

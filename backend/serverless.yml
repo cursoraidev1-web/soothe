@@ -1,0 +1,112 @@
+service: soothe-cms-backend
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ${opt:region, 'us-east-1'}
+  memorySize: 1024
+  timeout: 30
+  stage: ${opt:stage, 'dev'}
+  
+  environment:
+    DATABASE_URL: ${env:DATABASE_URL}
+    JWT_SECRET: ${env:JWT_SECRET}
+    JWT_REFRESH_SECRET: ${env:JWT_REFRESH_SECRET}
+    NODE_ENV: production
+    CORS_ORIGIN: ${env:CORS_ORIGIN, '*'}
+    S3_BUCKET: ${env:S3_BUCKET}
+    AWS_REGION: ${self:provider.region}
+    MAX_FILE_SIZE: ${env:MAX_FILE_SIZE, '5242880'}
+    THROTTLE_TTL: ${env:THROTTLE_TTL, '60'}
+    THROTTLE_LIMIT: ${env:THROTTLE_LIMIT, '10'}
+    SMTP_HOST: ${env:SMTP_HOST, ''}
+    SMTP_PORT: ${env:SMTP_PORT, '587'}
+    SMTP_USER: ${env:SMTP_USER, ''}
+    SMTP_PASSWORD: ${env:SMTP_PASSWORD, ''}
+    ADMIN_EMAIL: ${env:ADMIN_EMAIL, 'admin@soothe.com'}
+  
+  # VPC configuration for RDS access
+  # Uncomment and configure when you have VPC setup
+  # vpc:
+  #   securityGroupIds:
+  #     - ${env:SECURITY_GROUP_ID}
+  #   subnetIds:
+  #     - ${env:SUBNET_ID_1}
+  #     - ${env:SUBNET_ID_2}
+  
+  # IAM permissions for S3
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:GetObject
+            - s3:DeleteObject
+            - s3:PutObjectAcl
+          Resource: "arn:aws:s3:::${env:S3_BUCKET}/*"
+        - Effect: Allow
+          Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+          Resource: "*"
+
+functions:
+  api:
+    handler: dist/lambda.handler
+    events:
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Amz-Date
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowCredentials: true
+      - http:
+          path: /
+          method: ANY
+          cors: true
+    # Uncomment to reduce cold starts (costs extra)
+    # provisionedConcurrency: 1
+
+plugins:
+  - serverless-offline
+
+package:
+  patterns:
+    # Include only necessary files
+    - '!node_modules/.prisma/**'
+    - 'node_modules/.prisma/client/**'
+    # Include Prisma engine for Lambda (Linux ARM64)
+    - '!node_modules/@prisma/engines/**'
+    - 'node_modules/@prisma/engines/**/query-engine-linux-arm64-openssl-*'
+    # Include source files
+    - 'prisma/**'
+    - 'dist/**'
+    # Exclude development files
+    - '!src/**'
+    - '!*.ts'
+    - '!tsconfig.json'
+    - '!test/**'
+    - '!.env*'
+    - '!.git/**'
+    - '!logs/**'
+    - '!uploads/**'
+    - '!coverage/**'
+    - '!*.md'
+    - '!Dockerfile'
+    - '!docker-compose.yml'
+
+custom:
+  serverless-offline:
+    httpPort: 3000
+    lambdaPort: 3002
+
