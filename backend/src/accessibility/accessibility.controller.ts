@@ -8,6 +8,8 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { Public } from '../auth/decorators/public.decorator';
 import { UserRole } from '@prisma/client';
 
+
+
 @ApiTags('Accessibility')
 @Controller('accessibility')
 export class AccessibilityController {
