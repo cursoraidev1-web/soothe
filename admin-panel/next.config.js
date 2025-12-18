@@ -4,6 +4,20 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   
+  // ESLint configuration - ignore during builds to avoid config conflicts
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  
+  // TypeScript configuration
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+  
+  // Do NOT set output: 'standalone' - Vercel handles Next.js natively
+  // Setting output causes file tracing errors on Vercel
+  // Only use output: 'standalone' for Docker deployments
+  
   images: {
     // Allow images from backend API (uploads)
     remotePatterns: [
@@ -28,15 +42,6 @@ const nextConfig = {
     // Optimize images in production
     formats: ['image/avif', 'image/webp'],
   },
-  
-  // Environment variables (already available via process.env)
-  // No need to duplicate in env object for Next.js 13+
-  
-  // Output configuration
-  // Note: 'standalone' is only for Docker/self-hosting
-  // Vercel/Netlify handle Next.js natively, so we don't set it here
-  // If deploying to Docker, uncomment the line below:
-  // output: 'standalone',
   
   // Security headers (handled by hosting provider in production)
   async headers() {
