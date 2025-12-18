@@ -49,10 +49,10 @@ export default function ApplicantDetailPage() {
   }
 
   const handleDownloadCV = () => {
-    if (applicant?.cvPath) {
-      const cvUrl = applicant.cvPath.startsWith('http') 
-        ? applicant.cvPath 
-        : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '')}${applicant.cvPath}`
+    if (applicant?.cvUrl) {
+      const cvUrl = applicant.cvUrl.startsWith('http') 
+        ? applicant.cvUrl 
+        : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '')}${applicant.cvUrl}`
       window.open(cvUrl, '_blank')
     }
   }
@@ -82,7 +82,7 @@ export default function ApplicantDetailPage() {
           </div>
         </div>
         <div className="flex gap-2">
-          {applicant.cvPath && (
+          {applicant.cvUrl && (
             <Button onClick={handleDownloadCV}>
               <Download className="mr-2 h-4 w-4" />
               Download CV
@@ -131,7 +131,7 @@ export default function ApplicantDetailPage() {
               <p className="text-sm font-medium text-muted-foreground">Applied On</p>
               <p className="text-sm">{formatDate(applicant.createdAt)}</p>
             </div>
-            {applicant.cvPath && (
+            {applicant.cvUrl && (
               <div>
                 <p className="text-sm font-medium text-muted-foreground">CV</p>
                 <Button

@@ -20,11 +20,11 @@ export default async function Home() {
 
   return (
     <>
-      <Hero settings={settings} />
+      <Hero />
       <KeyPillars />
-      <SolutionsOverview solutions={topSolutions} />
+      <SolutionsOverview />
       <InclusivityHighlight />
-      <CTASection settings={settings} />
+      <CTASection />
     </>
   )
 }

@@ -35,7 +35,7 @@ export default async function SolutionDetailPage({ params }: any) {
 
   return (
     <>
-      <AccessibilityControls accessibility={accessibility} />
+      <AccessibilityControls />
       <Header />
       <main className="min-h-screen">
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">

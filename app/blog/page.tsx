@@ -20,7 +20,6 @@ export default async function BlogPage({ searchParams }: any) {
   const publishedPosts = postsArray.filter((post: any) => post.status === 'PUBLISHED')
 
   return (
-    const html = renderTiptapContent(post.content)
     <>
       <Header />
       <main className="min-h-screen">

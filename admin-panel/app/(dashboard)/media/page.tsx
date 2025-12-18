@@ -154,7 +154,7 @@ export default function MediaLibraryPage() {
                 {item.mimeType?.startsWith('image/') ? (
                   <img
                     src={item.url}
-                    alt={item.altText || item.filename}
+                    alt={item.altText || item.fileName}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -164,8 +164,8 @@ export default function MediaLibraryPage() {
                 )}
               </div>
               <div className="p-3 space-y-2">
-                <p className="text-sm font-medium truncate" title={item.filename}>
-                  {item.filename}
+                <p className="text-sm font-medium truncate" title={item.fileName}>
+                  {item.fileName}
                 </p>
                 {item.altText && (
                   <p className="text-xs text-muted-foreground truncate" title={item.altText}>

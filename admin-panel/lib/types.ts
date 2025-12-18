@@ -114,6 +114,7 @@ export interface Career {
   salaryMin?: number
   salaryMax?: number
   salaryCurrency?: string
+  salaryRange?: string
   metaTitle?: string
   metaDescription?: string
   createdAt: string
@@ -127,8 +128,10 @@ export interface Applicant {
   email: string
   phone?: string
   message?: string
-  cvUrl: string
+  cvUrl?: string
+  cvPath?: string
   linkedinUrl?: string
+  coverLetter?: string
   careerId: string
   career: {
     id: string
@@ -144,6 +147,7 @@ export interface Applicant {
 // Team types
 export interface TeamMember {
   id: string
+  name?: string
   firstName: string
   lastName: string
   role: string

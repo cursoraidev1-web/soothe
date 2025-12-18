@@ -5,9 +5,11 @@ import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   
   // Get config service
   const configService = app.get(ConfigService);
@@ -17,6 +19,11 @@ async function bootstrap() {
   
   // Security
   app.use(helmet());
+  
+  // Serve static files from uploads directory
+  app.useStaticAssets(join(process.cwd(), 'uploads'), {
+    prefix: '/uploads',
+  });
   
   // CORS
   app.enableCors({
@@ -72,16 +79,13 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
   
-  // Only listen if not running in Lambda
-  if (process.env.AWS_LAMBDA_FUNCTION_NAME === undefined) {
-    const port = configService.get('PORT', 3000);
-    await app.listen(port);
-    
-    console.log(`\n🚀 SOOTHE CMS Backend is running!`);
-    console.log(`📍 Server: http://localhost:${port}`);
-    console.log(`📚 API Docs: http://localhost:${port}/api/docs`);
-    console.log(`🔒 Environment: ${configService.get('NODE_ENV', 'development')}`);
-  }
+  const port = configService.get('PORT', 3000);
+  await app.listen(port);
+  
+  console.log(`\n🚀 SOOTHE CMS Backend is running!`);
+  console.log(`📍 Server: http://localhost:${port}`);
+  console.log(`📚 API Docs: http://localhost:${port}/api/docs`);
+  console.log(`🔒 Environment: ${configService.get('NODE_ENV', 'development')}`);
 }
 
 bootstrap();
