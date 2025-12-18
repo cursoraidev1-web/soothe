@@ -18,6 +18,12 @@ const nextConfig = {
   // Setting output causes file tracing errors on Vercel
   // Only use output: 'standalone' for Docker deployments
   
+  // Experimental features - disable anything that might cause build issues
+  experimental: {
+    // Disable server components external packages to avoid tracing issues
+    serverComponentsExternalPackages: [],
+  },
+  
   images: {
     // Allow images from backend API (uploads)
     remotePatterns: [
