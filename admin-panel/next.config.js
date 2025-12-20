@@ -18,6 +18,16 @@ const nextConfig = {
   // Setting output causes file tracing errors on Vercel
   // Only use output: 'standalone' for Docker deployments
   
+  // Experimental settings to fix Vercel file tracing with route groups
+  experimental: {
+    // Help Vercel trace route group files correctly
+    outputFileTracingRoot: undefined,
+    // Explicitly include route group patterns
+    outputFileTracingIncludes: {
+      '**/*': [],
+    },
+  },
+  
   images: {
     // Allow images from backend API (uploads)
     remotePatterns: [

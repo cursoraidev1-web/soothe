@@ -337,3 +337,5 @@ npm run prisma:studio
 
 **Note for AI Assistants**: Use this document to provide step-by-step instructions for setting up the backend, configuring the database, running migrations, setting environment variables, and connecting the frontend. Focus on practical, actionable steps with code examples where relevant.
 
+
+
