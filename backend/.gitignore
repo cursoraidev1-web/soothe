@@ -43,6 +43,3 @@ lerna-debug.log*
 /uploads
 /public/uploads
 
-# Prisma
-prisma/migrations/*
-!prisma/migrations/.gitkeep
