@@ -51,12 +51,21 @@ export default function CreatePagePage() {
 
   const onSubmit = async (data: PageForm) => {
     setIsLoading(true)
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/pages/create/page.tsx:52',message:'Create Page Start',data:{title:data.title,slug:data.slug,isPublished:data.isPublished},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+    // #endregion
 
     try {
       await api.post('/admin/pages', data)
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/pages/create/page.tsx:56',message:'Create Page Success',data:{title:data.title},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+      // #endregion
       toast.success('Page created successfully')
       router.push('/pages')
     } catch (error: any) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/pages/create/page.tsx:60',message:'Create Page Error',data:{status:error.response?.status,message:error.response?.data?.message||error.message,errors:error.response?.data?.errors},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+      // #endregion
       toast.error(error.response?.data?.message || 'Failed to create page')
     } finally {
       setIsLoading(false)

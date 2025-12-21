@@ -82,6 +82,9 @@ export default function CreateSolutionPage() {
 
   const onSubmit = async (data: SolutionForm) => {
     setIsLoading(true)
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/solutions/create/page.tsx:83',message:'Create Solution Start',data:{title:data.title,hasFeatures:features.length>0,hasBenefits:benefits.length>0},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+    // #endregion
 
     try {
       const payload = {
@@ -91,9 +94,15 @@ export default function CreateSolutionPage() {
         benefits,
       }
       await api.post('/admin/solutions', payload)
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/solutions/create/page.tsx:93',message:'Create Solution Success',data:{title:data.title},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+      // #endregion
       toast.success('Solution created successfully')
       router.push('/solutions')
     } catch (error: any) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/solutions/create/page.tsx:97',message:'Create Solution Error',data:{status:error.response?.status,message:error.response?.data?.message||error.message,errors:error.response?.data?.errors},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+      // #endregion
       toast.error(error.response?.data?.message || 'Failed to create solution')
     } finally {
       setIsLoading(false)

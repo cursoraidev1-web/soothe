@@ -70,12 +70,21 @@ export default function EditPagePage() {
 
   const onSubmit = async (data: PageForm) => {
     setIsLoading(true)
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/pages/[slug]/edit/page.tsx:71',message:'Update Page Start',data:{pageId,title:data.title},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+    // #endregion
 
     try {
       await api.put(`/admin/pages/${pageId}`, data)
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/pages/[slug]/edit/page.tsx:75',message:'Update Page Success',data:{pageId},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+      // #endregion
       toast.success('Page updated successfully')
       router.push('/pages')
     } catch (error: any) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/pages/[slug]/edit/page.tsx:79',message:'Update Page Error',data:{status:error.response?.status,message:error.response?.data?.message||error.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+      // #endregion
       toast.error(error.response?.data?.message || 'Failed to update page')
     } finally {
       setIsLoading(false)
@@ -84,12 +93,21 @@ export default function EditPagePage() {
 
   const handleDelete = async () => {
     if (!confirm('Are you sure you want to delete this page?')) return
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/pages/[slug]/edit/page.tsx:85',message:'Delete Page Start',data:{pageId},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+    // #endregion
 
     try {
       await api.delete(`/admin/pages/${pageId}`)
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/pages/[slug]/edit/page.tsx:89',message:'Delete Page Success',data:{pageId},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+      // #endregion
       toast.success('Page deleted successfully')
       router.push('/pages')
-    } catch (error) {
+    } catch (error: any) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/pages/[slug]/edit/page.tsx:93',message:'Delete Page Error',data:{status:error.response?.status,message:error.response?.data?.message||error.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+      // #endregion
       toast.error('Failed to delete page')
     }
   }

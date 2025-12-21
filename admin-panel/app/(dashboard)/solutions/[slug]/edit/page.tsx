@@ -105,10 +105,19 @@ export default function EditSolutionPage() {
         features,
         benefits,
       }
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/solutions/[slug]/edit/page.tsx:108',message:'Update Solution Start',data:{solutionId,title:data.title},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+      // #endregion
       await api.put(`/admin/solutions/${solutionId}`, payload)
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/solutions/[slug]/edit/page.tsx:110',message:'Update Solution Success',data:{solutionId},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+      // #endregion
       toast.success('Solution updated successfully')
       router.push('/solutions')
     } catch (error: any) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/solutions/[slug]/edit/page.tsx:114',message:'Update Solution Error',data:{status:error.response?.status,message:error.response?.data?.message||error.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+      // #endregion
       toast.error(error.response?.data?.message || 'Failed to update solution')
     } finally {
       setIsLoading(false)
@@ -117,12 +126,21 @@ export default function EditSolutionPage() {
 
   const handleDelete = async () => {
     if (!confirm('Are you sure you want to delete this solution?')) return
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/solutions/[slug]/edit/page.tsx:118',message:'Delete Solution Start',data:{solutionId},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+    // #endregion
 
     try {
       await api.delete(`/admin/solutions/${solutionId}`)
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/solutions/[slug]/edit/page.tsx:122',message:'Delete Solution Success',data:{solutionId},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+      // #endregion
       toast.success('Solution deleted successfully')
       router.push('/solutions')
-    } catch (error) {
+    } catch (error: any) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/solutions/[slug]/edit/page.tsx:126',message:'Delete Solution Error',data:{status:error.response?.status,message:error.response?.data?.message||error.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+      // #endregion
       toast.error('Failed to delete solution')
     }
   }

@@ -64,9 +64,9 @@ class ApiClient {
               
               return this.client(originalRequest)
             }
-          } catch (refreshError) {
+          } catch (refreshError: any) {
             // #region agent log
-            fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/lib/api.ts:52',message:'Token Refresh Failed',data:{error:refreshError.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+            fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/lib/api.ts:52',message:'Token Refresh Failed',data:{error:refreshError?.message||String(refreshError)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
             // #endregion
             // Refresh failed, logout user
             this.clearTokens()

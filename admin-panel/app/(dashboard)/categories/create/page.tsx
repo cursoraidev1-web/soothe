@@ -50,12 +50,21 @@ export default function CreateCategoryPage() {
 
   const onSubmit = async (data: CategoryForm) => {
     setIsLoading(true)
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/categories/create/page.tsx:51',message:'Create Category Start',data:{name:data.name,slug:data.slug},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+    // #endregion
 
     try {
       await api.post('/solutions/categories', data)
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/categories/create/page.tsx:55',message:'Create Category Success',data:{name:data.name},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+      // #endregion
       toast.success('Category created successfully')
       router.push('/categories')
     } catch (error: any) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/categories/create/page.tsx:59',message:'Create Category Error',data:{status:error.response?.status,message:error.response?.data?.message||error.message,errors:error.response?.data?.errors},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H'})}).catch(()=>{});
+      // #endregion
       toast.error(error.response?.data?.message || 'Failed to create category')
     } finally {
       setIsLoading(false)
