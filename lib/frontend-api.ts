@@ -8,15 +8,25 @@ interface FetchOptions {
 }
 
 async function fetchAPI<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
-  const { method = 'GET', body, cache = 'no-store', revalidate } = options
+  const { method = 'GET', body, cache, revalidate } = options
 
-  const config: RequestInit = {
+  const config: RequestInit & { next?: { revalidate?: number } } = {
     method,
     headers: {
       'Content-Type': 'application/json',
     },
-    cache,
-    ...(revalidate && { next: { revalidate } }),
+  }
+
+  // Set cache options - only one should be set
+  if (revalidate !== undefined) {
+    // Use Next.js revalidation (for ISR)
+    config.next = { revalidate }
+  } else if (cache !== undefined) {
+    // Use explicit cache option
+    config.cache = cache
+  } else {
+    // Default to force-cache for GET requests
+    config.cache = 'force-cache'
   }
 
   if (body) {
@@ -24,6 +34,11 @@ async function fetchAPI<T>(endpoint: string, options: FetchOptions = {}): Promis
   }
 
   const fullUrl = `${API_URL}${endpoint}`
+  
+  // Warn if using localhost in production
+  if (process.env.NODE_ENV === 'production' && API_URL.includes('localhost')) {
+    console.warn('[Frontend API] WARNING: Using localhost API URL in production. Set NEXT_PUBLIC_API_URL environment variable.')
+  }
   
   try {
     console.log(`[Frontend API] Fetching: ${fullUrl}`)
@@ -46,21 +61,22 @@ async function fetchAPI<T>(endpoint: string, options: FetchOptions = {}): Promis
 
 export const frontendApi = {
   // Pages
-  getPages: () => fetchAPI<any[]>('/pages', { revalidate: 3600 }),
-  getPage: (slug: string) => fetchAPI<any>(`/pages/${slug}`, { revalidate: 3600 }),
+  // Note: Pages have export const revalidate = 3600, so we don't need to pass revalidate here
+  getPages: () => fetchAPI<any[]>('/pages'),
+  getPage: (slug: string) => fetchAPI<any>(`/pages/${slug}`),
 
   // Solutions
-  getSolutions: () => fetchAPI<any[]>('/solutions', { revalidate: 3600 }),
-  getSolution: (slug: string) => fetchAPI<any>(`/solutions/${slug}`, { revalidate: 3600 }),
-  getCategories: () => fetchAPI<any[]>('/solutions/categories', { revalidate: 3600 }),
+  getSolutions: () => fetchAPI<any[]>('/solutions'),
+  getSolution: (slug: string) => fetchAPI<any>(`/solutions/${slug}`),
+  getCategories: () => fetchAPI<any[]>('/solutions/categories'),
 
   // Blog
-  getBlogPosts: (page = 1) => fetchAPI<any>(`/blog?page=${page}&limit=10`, { revalidate: 600 }),
-  getBlogPost: (slug: string) => fetchAPI<any>(`/blog/${slug}`, { revalidate: 3600 }),
+  getBlogPosts: (page = 1) => fetchAPI<any>(`/blog?page=${page}&limit=10`),
+  getBlogPost: (slug: string) => fetchAPI<any>(`/blog/${slug}`),
 
   // Careers
-  getCareers: () => fetchAPI<any[]>('/careers', { revalidate: 3600 }),
-  getCareer: (id: string) => fetchAPI<any>(`/careers/${id}`, { revalidate: 3600 }),
+  getCareers: () => fetchAPI<any[]>('/careers'),
+  getCareer: (id: string) => fetchAPI<any>(`/careers/${id}`),
   applyToCareer: async (id: string, data: FormData) => {
     const response = await fetch(`${API_URL}/careers/${id}/apply`, {
       method: 'POST',
@@ -70,7 +86,7 @@ export const frontendApi = {
   },
 
   // Team
-  getTeam: () => fetchAPI<any[]>('/team', { revalidate: 3600 }),
+  getTeam: () => fetchAPI<any[]>('/team'),
 
   // Contact
   submitContact: (data: any) => fetchAPI<any>('/contact', {
@@ -80,8 +96,8 @@ export const frontendApi = {
   }),
 
   // Settings
-  getSettings: () => fetchAPI<any>('/settings', { revalidate: 3600 }),
+  getSettings: () => fetchAPI<any>('/settings'),
 
   // Accessibility
-  getAccessibility: () => fetchAPI<any>('/accessibility', { revalidate: 3600 }),
+  getAccessibility: () => fetchAPI<any>('/accessibility'),
 }
