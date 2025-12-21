@@ -48,7 +48,16 @@ export default function EditBlogPage() {
     formState: { errors },
   } = useForm<BlogForm>({
     resolver: zodResolver(blogSchema),
+    defaultValues: {
+      content: '', // Initialize content in form
+    },
   })
+
+  // Sync content state with form
+  const handleContentChange = (value: string) => {
+    setContent(value)
+    setValue('content', value, { shouldValidate: true }) // Update form and trigger validation
+  }
 
   useEffect(() => {
     if (slug) {
@@ -213,7 +222,7 @@ export default function EditBlogPage() {
             <CardTitle>Content *</CardTitle>
           </CardHeader>
           <CardContent>
-            <RichTextEditor value={content} onChange={setContent} />
+            <RichTextEditor value={content} onChange={handleContentChange} />
             {errors.content && (
               <p className="text-sm text-destructive mt-2">{errors.content.message}</p>
             )}

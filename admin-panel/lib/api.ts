@@ -16,6 +16,9 @@ class ApiClient {
     // Request interceptor to add auth token
     this.client.interceptors.request.use(
       (config) => {
+        // #region agent log
+        fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/lib/api.ts:18',message:'API Request',data:{method:config.method,url:config.url,hasToken:!!this.getToken()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+        // #endregion
         const token = this.getToken()
         if (token && config.headers) {
           config.headers.Authorization = `Bearer ${token}`
@@ -27,8 +30,16 @@ class ApiClient {
 
     // Response interceptor to handle token refresh
     this.client.interceptors.response.use(
-      (response) => response,
+      (response) => {
+        // #region agent log
+        fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/lib/api.ts:30',message:'API Response Success',data:{status:response.status,url:response.config.url,dataType:Array.isArray(response.data)?'array':typeof response.data},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+        // #endregion
+        return response
+      },
       async (error) => {
+        // #region agent log
+        fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/lib/api.ts:32',message:'API Response Error',data:{status:error.response?.status,url:error.config?.url,message:error.response?.data?.message||error.message,is401:error.response?.status===401},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,E'})}).catch(()=>{});
+        // #endregion
         const originalRequest = error.config
 
         // If 401 and we haven't retried yet, try to refresh token
@@ -37,6 +48,9 @@ class ApiClient {
 
           try {
             const refreshToken = this.getRefreshToken()
+            // #region agent log
+            fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/lib/api.ts:40',message:'Token Refresh Attempt',data:{hasRefreshToken:!!refreshToken},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+            // #endregion
             if (refreshToken) {
               const { data } = await axios.post(`${API_URL}/auth/refresh`, {
                 refreshToken,
@@ -44,10 +58,16 @@ class ApiClient {
 
               this.setTokens(data.accessToken, data.refreshToken)
               originalRequest.headers.Authorization = `Bearer ${data.accessToken}`
+              // #region agent log
+              fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/lib/api.ts:48',message:'Token Refresh Success',data:{hasNewToken:!!data.accessToken},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+              // #endregion
               
               return this.client(originalRequest)
             }
           } catch (refreshError) {
+            // #region agent log
+            fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/lib/api.ts:52',message:'Token Refresh Failed',data:{error:refreshError.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+            // #endregion
             // Refresh failed, logout user
             this.clearTokens()
             if (typeof window !== 'undefined') {
@@ -90,7 +110,13 @@ class ApiClient {
 
   // Generic HTTP methods
   async get<T>(url: string, config?: AxiosRequestConfig) {
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/lib/api.ts:92',message:'GET Request',data:{url},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+    // #endregion
     const response = await this.client.get<T>(url, config)
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/lib/api.ts:95',message:'GET Response',data:{url,status:response.status,isArray:Array.isArray(response.data),hasData:!!response.data,hasMeta:!!(response.data as any)?.meta},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+    // #endregion
     return response.data
   }
 
@@ -110,6 +136,10 @@ class ApiClient {
   }
 
   async upload<T>(url: string, formData: FormData, config?: AxiosRequestConfig) {
+    // #region agent log
+    const fileInfo = formData.get('file') as File | null;
+    fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/lib/api.ts:112',message:'Upload Request',data:{url,fileName:fileInfo?.name,fileSize:fileInfo?.size,fileType:fileInfo?.type},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+    // #endregion
     const response = await this.client.post<T>(url, formData, {
       ...config,
       headers: {
@@ -117,6 +147,9 @@ class ApiClient {
         ...config?.headers,
       },
     })
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/lib/api.ts:121',message:'Upload Response',data:{url,status:response.status,hasData:!!response.data},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+    // #endregion
     return response.data
   }
 }

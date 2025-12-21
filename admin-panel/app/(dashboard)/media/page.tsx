@@ -24,10 +24,19 @@ export default function MediaLibraryPage() {
   const fetchMedia = async () => {
     try {
       setLoading(true)
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/media/page.tsx:24',message:'Fetch Media Start',data:{search},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B,C'})}).catch(()=>{});
+      // #endregion
       const response = await api.get<Media[]>(`/media?search=${search}`)
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/media/page.tsx:28',message:'Fetch Media Response',data:{isArray:Array.isArray(response),length:Array.isArray(response)?response.length:'N/A',type:typeof response},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+      // #endregion
       const safeMedia = Array.isArray(response) ? response : []
       setMedia(safeMedia)
-    } catch (error) {
+    } catch (error: any) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/media/page.tsx:32',message:'Fetch Media Error',data:{status:error.response?.status,message:error.response?.data?.message||error.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+      // #endregion
       console.error('Failed to fetch media:', error)
       toast.error('Failed to fetch media')
       setMedia([])
@@ -51,13 +60,22 @@ export default function MediaLibraryPage() {
     formData.append('altText', altText || file.name)
 
     try {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/media/page.tsx:53',message:'Upload Start',data:{fileName:file.name,fileSize:file.size,fileType:file.type,hasAltText:!!altText},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+      // #endregion
       await api.upload<Media>('/media/upload', formData)
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/media/page.tsx:55',message:'Upload Success',data:{fileName:file.name},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+      // #endregion
       toast.success('File uploaded successfully')
       setAltText('')
       fetchMedia()
       // Reset file input
       e.target.value = ''
     } catch (error: any) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/media/page.tsx:62',message:'Upload Error',data:{status:error.response?.status,message:error.response?.data?.message||error.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D,E'})}).catch(()=>{});
+      // #endregion
       toast.error(error.response?.data?.message || 'Failed to upload file')
     } finally {
       setUploading(false)

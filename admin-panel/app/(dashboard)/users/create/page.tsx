@@ -45,10 +45,18 @@ export default function CreateUserPage() {
     setIsLoading(true)
 
     try {
-      await api.post('/admin/users', data)
+      // Backend doesn't accept isActive in CreateUserDto, remove it
+      const { isActive, ...payload } = data
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/users/create/page.tsx:44',message:'Create User',data:{hasIsActive:!!isActive,payloadKeys:Object.keys(payload)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});
+      // #endregion
+      await api.post('/admin/users', payload)
       toast.success('User created successfully')
       router.push('/users')
     } catch (error: any) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/users/create/page.tsx:52',message:'Create User Error',data:{status:error.response?.status,message:error.response?.data?.message||error.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});
+      // #endregion
       toast.error(error.response?.data?.message || 'Failed to create user')
     } finally {
       setIsLoading(false)

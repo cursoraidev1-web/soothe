@@ -47,8 +47,15 @@ export default function CreateBlogPage() {
     resolver: zodResolver(blogSchema),
     defaultValues: {
       status: 'DRAFT',
+      content: '', // Initialize content in form
     },
   })
+
+  // Sync content state with form
+  const handleContentChange = (value: string) => {
+    setContent(value)
+    setValue('content', value, { shouldValidate: true }) // Update form and trigger validation
+  }
 
   const title = watch('title')
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,6 +66,9 @@ export default function CreateBlogPage() {
 
   const onSubmit = async (data: BlogForm) => {
     setIsLoading(true)
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/blog/create/page.tsx:60',message:'Blog Submit Start',data:{hasContent:!!content,contentLength:content.length,formContent:data.content,formContentLength:data.content?.length||0},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'G'})}).catch(()=>{});
+    // #endregion
 
     try {
       // Convert content string to proper format
@@ -99,10 +109,16 @@ export default function CreateBlogPage() {
         tags,
         content: contentToSend,
       }
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/blog/create/page.tsx:100',message:'Blog Submit Payload',data:{hasContent:!!contentToSend,contentType:typeof contentToSend,isObject:typeof contentToSend==='object'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'G'})}).catch(()=>{});
+      // #endregion
       await api.post('/admin/blog', payload)
       toast.success('Post created successfully')
       router.push('/blog')
     } catch (error: any) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/blog/create/page.tsx:107',message:'Blog Submit Error',data:{status:error.response?.status,message:error.response?.data?.message||error.message,errors:error.response?.data?.errors},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'G'})}).catch(()=>{});
+      // #endregion
       toast.error(error.response?.data?.message || 'Failed to create post')
     } finally {
       setIsLoading(false)
@@ -189,7 +205,7 @@ export default function CreateBlogPage() {
           <CardContent>
             <RichTextEditor
               value={content}
-              onChange={setContent}
+              onChange={handleContentChange}
               placeholder="Write your blog post content here..."
             />
             {errors.content && (

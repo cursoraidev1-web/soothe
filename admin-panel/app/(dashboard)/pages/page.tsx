@@ -26,12 +26,21 @@ export default function PagesListPage() {
   const fetchPages = async () => {
     try {
       setLoading(true)
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/pages/page.tsx:26',message:'Fetch Pages Start',data:{page:currentPage,search},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B,C'})}).catch(()=>{});
+      // #endregion
       const response = await api.get<PaginatedResponse<Page>>(
         `/pages?page=${currentPage}&limit=10&search=${search}`
       )
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/pages/page.tsx:32',message:'Fetch Pages Response',data:{hasData:!!response.data,hasMeta:!!response.meta,dataIsArray:Array.isArray(response.data),dataLength:Array.isArray(response.data)?response.data.length:'N/A',totalPages:response.meta?.totalPages},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+      // #endregion
       setPages(response.data)
       setTotalPages(response.meta.totalPages)
-    } catch (error) {
+    } catch (error: any) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/pages/page.tsx:36',message:'Fetch Pages Error',data:{status:error.response?.status,message:error.response?.data?.message||error.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+      // #endregion
       toast.error('Failed to fetch pages')
     } finally {
       setLoading(false)
