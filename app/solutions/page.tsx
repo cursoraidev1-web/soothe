@@ -1,10 +1,33 @@
+import type { Metadata } from 'next'
 import { frontendApi } from '@/lib/frontend-api'
 import Link from 'next/link'
 import Header from '@/components/Header'
 
-export const metadata = {
-  title: 'Our Solutions | SOOTHE Technologies',
-  description: 'Explore our comprehensive technology solutions designed for accessibility and innovation.',
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://soothe-technologies.com'
+const logoUrl = `${siteUrl}/logo/logo-horizontal-dark.png`
+
+export const metadata: Metadata = {
+  title: 'Our Solutions',
+  description: 'Explore our comprehensive technology solutions designed for accessibility and innovation. Discover how we make technology work for everyone.',
+  openGraph: {
+    title: 'Our Solutions | SOOTHE Technologies',
+    description: 'Explore our comprehensive technology solutions designed for accessibility and innovation.',
+    url: `${siteUrl}/solutions`,
+    images: [
+      {
+        url: logoUrl,
+        width: 1200,
+        height: 630,
+        alt: 'SOOTHE Technologies Logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Our Solutions | SOOTHE Technologies',
+    description: 'Explore our comprehensive technology solutions designed for accessibility and innovation.',
+    images: [logoUrl],
+  },
 }
 
 export const revalidate = 3600

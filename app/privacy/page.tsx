@@ -1,8 +1,31 @@
+import type { Metadata } from 'next'
 import Header from '@/components/Header'
 
-export const metadata = {
-  title: 'Privacy Policy | SOOTHE Technologies',
-  description: 'Our commitment to your privacy',
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://soothe-technologies.com'
+const logoUrl = `${siteUrl}/logo/logo-horizontal-dark.png`
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'Our commitment to your privacy. Learn how SOOTHE Technologies protects and handles your personal information.',
+  openGraph: {
+    title: 'Privacy Policy | SOOTHE Technologies',
+    description: 'Our commitment to your privacy. Learn how we protect and handle your personal information.',
+    url: `${siteUrl}/privacy`,
+    images: [
+      {
+        url: logoUrl,
+        width: 1200,
+        height: 630,
+        alt: 'SOOTHE Technologies Logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Privacy Policy | SOOTHE Technologies',
+    description: 'Our commitment to your privacy.',
+    images: [logoUrl],
+  },
 }
 
 export default function PrivacyPage() {

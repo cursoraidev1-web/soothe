@@ -1,8 +1,31 @@
+import type { Metadata } from 'next'
 import Header from '@/components/Header'
 
-export const metadata = {
-  title: 'Terms of Service | SOOTHE Technologies',
-  description: 'Terms and conditions for using our services',
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://soothe-technologies.com'
+const logoUrl = `${siteUrl}/logo/logo-horizontal-dark.png`
+
+export const metadata: Metadata = {
+  title: 'Terms of Service',
+  description: 'Terms and conditions for using SOOTHE Technologies services. Read our terms of service and user agreement.',
+  openGraph: {
+    title: 'Terms of Service | SOOTHE Technologies',
+    description: 'Terms and conditions for using our services. Read our terms of service and user agreement.',
+    url: `${siteUrl}/terms`,
+    images: [
+      {
+        url: logoUrl,
+        width: 1200,
+        height: 630,
+        alt: 'SOOTHE Technologies Logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Terms of Service | SOOTHE Technologies',
+    description: 'Terms and conditions for using our services.',
+    images: [logoUrl],
+  },
 }
 
 export default function TermsPage() {

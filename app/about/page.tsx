@@ -1,8 +1,31 @@
+import type { Metadata } from 'next'
 import Header from '@/components/Header'
 
-export const metadata = {
-  title: 'About Us | SOOTHE Technologies',
-  description: 'Technology that empowers everyone',
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://soothe-technologies.com'
+const logoUrl = `${siteUrl}/logo/logo-horizontal-dark.png`
+
+export const metadata: Metadata = {
+  title: 'About Us',
+  description: 'Learn about SOOTHE Technologies - our mission to create innovative, accessible technology that empowers everyone and makes life easier.',
+  openGraph: {
+    title: 'About Us | SOOTHE Technologies',
+    description: 'Learn about SOOTHE Technologies - our mission to create innovative, accessible technology that empowers everyone.',
+    url: `${siteUrl}/about`,
+    images: [
+      {
+        url: logoUrl,
+        width: 1200,
+        height: 630,
+        alt: 'SOOTHE Technologies Logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Us | SOOTHE Technologies',
+    description: 'Technology that empowers everyone.',
+    images: [logoUrl],
+  },
 }
 
 const values = [

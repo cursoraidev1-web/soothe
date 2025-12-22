@@ -6,18 +6,37 @@ import Link from 'next/link'
 
 export const revalidate = 3600
 
-export async function generateMetadata({ params }: any) {
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://soothe-technologies.com'
+const logoUrl = `${siteUrl}/logo/logo-horizontal-dark.png`
+
+export async function generateMetadata({ params }: any): Promise<any> {
   const solution = await frontendApi.getSolution(params.slug).catch(() => null)
   
   if (!solution) return {}
 
+  const description = solution.description || `Learn more about ${solution.title} from SOOTHE Technologies`
+  const images = solution.imageUrl ? [solution.imageUrl, logoUrl] : [logoUrl]
+
   return {
-    title: `${solution.title} | SOOTHE Technologies`,
-    description: solution.description,
+    title: solution.title,
+    description,
     openGraph: {
       title: solution.title,
-      description: solution.description,
-      images: solution.imageUrl ? [solution.imageUrl] : [],
+      description,
+      url: `${siteUrl}/solutions/${params.slug}`,
+      type: 'website',
+      images: images.map((img: string) => ({
+        url: img,
+        width: 1200,
+        height: 630,
+        alt: solution.title,
+      })),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: solution.title,
+      description,
+      images: images,
     },
   }
 }

@@ -17,33 +17,64 @@ const spaceGrotesk = Space_Grotesk({
   display: 'swap',
 })
 
+// Site configuration
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://soothe-technologies.com'
+const siteName = 'SOOTHE Technologies'
+const defaultDescription = 'Innovative, accessible, and user-centric apps and websites that simplify everyday life. Focusing on productivity, wellness, and inclusivity.'
+const logoUrl = `${siteUrl}/logo/logo-horizontal-dark.png`
+
 export const metadata: Metadata = {
-  title: 'SOOHE TECHNOLOGIES - Making Life Easier, One Solution at a Time',
-  description: 'Innovative, accessible, and user-centric apps and websites that simplify everyday life. Focusing on productivity, wellness, and inclusivity.',
-  keywords: 'accessibility, inclusive design, productivity apps, wellness technology, assistive technology, smart living',
-  authors: [{ name: 'SOOHE TECHNOLOGIES' }],
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${siteName} - Making Life Easier, One Solution at a Time`,
+    template: `%s | ${siteName}`,
+  },
+  description: defaultDescription,
+  keywords: ['accessibility', 'inclusive design', 'productivity apps', 'wellness technology', 'assistive technology', 'smart living', 'SOOTHE Technologies'],
+  authors: [{ name: 'SOOTHE Technologies' }],
+  creator: 'SOOTHE Technologies',
+  publisher: 'SOOTHE Technologies',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   icons: {
     icon: '/logo/favicon.ico',
     apple: '/logo/apple-touch-icon.png',
   },
   openGraph: {
-    title: 'SOOHE TECHNOLOGIES',
-    description: 'Making life easier. Inclusive. One solution at a time.',
     type: 'website',
+    locale: 'en_US',
+    url: siteUrl,
+    siteName: siteName,
+    title: siteName,
+    description: defaultDescription,
     images: [
       {
-        url: '/logo/logo-horizontal-dark.png',
+        url: logoUrl,
         width: 1200,
         height: 630,
-        alt: 'SOOHE TECHNOLOGIES Logo',
+        alt: 'SOOTHE Technologies Logo',
+        type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'SOOHE TECHNOLOGIES',
-    description: 'Making life easier. Inclusive. One solution at a time.',
-    images: ['/logo/logo-horizontal-dark.png'],
+    title: siteName,
+    description: defaultDescription,
+    images: [logoUrl],
+    creator: '@soothetech',
+  },
+  alternates: {
+    canonical: siteUrl,
   },
 }
 

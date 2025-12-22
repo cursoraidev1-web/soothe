@@ -6,18 +6,40 @@ import Link from 'next/link'
 
 export const revalidate = 3600
 
-export async function generateMetadata({ params }: any) {
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://soothe-technologies.com'
+const logoUrl = `${siteUrl}/logo/logo-horizontal-dark.png`
+
+export async function generateMetadata({ params }: any): Promise<any> {
   const post = await frontendApi.getBlogPost(params.slug).catch(() => null)
   
   if (!post) return {}
 
+  const description = post.excerpt || post.content?.substring(0, 160) || 'Read this article from SOOTHE Technologies'
+  const images = post.featuredImage ? [post.featuredImage, logoUrl] : [logoUrl]
+
   return {
-    title: `${post.title} | SOOTHE Blog`,
-    description: post.excerpt || post.content?.substring(0, 160),
+    title: post.title,
+    description,
     openGraph: {
       title: post.title,
-      description: post.excerpt,
-      images: post.featuredImage ? [post.featuredImage] : [],
+      description,
+      url: `${siteUrl}/blog/${params.slug}`,
+      type: 'article',
+      images: images.map((img: string) => ({
+        url: img,
+        width: 1200,
+        height: 630,
+        alt: post.title,
+      })),
+      publishedTime: post.createdAt,
+      authors: post.author ? [`${post.author.firstName} ${post.author.lastName}`] : [],
+      tags: post.tags || [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description,
+      images: images,
     },
   }
 }
