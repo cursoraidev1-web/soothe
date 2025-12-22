@@ -44,3 +44,4 @@ The `vercel.json` file was unnecessary and was causing Vercel to look in the wro
 **Status**: Fixed  
 **Action Required**: Redeploy on Vercel
 
+

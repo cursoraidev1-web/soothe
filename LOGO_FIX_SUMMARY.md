@@ -35,3 +35,4 @@ Located in `public/logo/`:
 - ✅ `favicon.ico`
 - ❌ `logomark.png` (doesn't exist - was causing the error)
 
+
