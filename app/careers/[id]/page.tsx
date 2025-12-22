@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import { toast } from 'sonner'
 
 interface Career {
@@ -122,7 +121,6 @@ export default function CareerDetailPage() {
             <p className="mt-4 text-neutral-600">Loading job details...</p>
           </div>
         </div>
-        <Footer />
       </>
     )
   }
@@ -143,7 +141,6 @@ export default function CareerDetailPage() {
             </button>
           </div>
         </div>
-        <Footer />
       </>
     )
   }
@@ -335,7 +332,6 @@ export default function CareerDetailPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   )
 }

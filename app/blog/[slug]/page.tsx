@@ -64,7 +64,6 @@ export default async function BlogPostPage({ params }: any) {
               </a>
             </div>
           </div>
-          <Footer />
         </>
       )
     }
@@ -194,7 +193,6 @@ export default async function BlogPostPage({ params }: any) {
           </div>
         </div>
       </main>
-      <Footer />
     </>
   )
 }

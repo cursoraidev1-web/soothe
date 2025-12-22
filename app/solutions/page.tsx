@@ -1,7 +1,6 @@
 import { frontendApi } from '@/lib/frontend-api'
 import Link from 'next/link'
 import Header from '@/components/Header'
-import AccessibilityControls from '@/components/AccessibilityControls'
 
 export const metadata = {
   title: 'Our Solutions | SOOTHE Technologies',
@@ -23,91 +22,111 @@ export default async function SolutionsPage() {
 
   return (
     <>
-      <AccessibilityControls />
       <Header />
-      <main className="min-h-screen">
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20">
-          <div className="container mx-auto px-4">
-            <h1 className="text-5xl font-bold mb-4">Our Solutions</h1>
-            <p className="text-xl">Innovative technology solutions designed for everyone</p>
+      <div>
+        {/* Hero Section */}
+        <section className="py-20 bg-gradient-to-br from-neutral-50 via-primary-50 to-accent-50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-4xl mx-auto">
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
+                Our{' '}
+                <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">
+                  Solutions
+                </span>
+              </h1>
+              <p className="text-xl text-neutral-700 leading-relaxed">
+                Innovative technology solutions designed for accessibility and everyone.
+              </p>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div className="container mx-auto px-4 py-16">
-          {categoriesArray.length > 0 ? (
-            categoriesArray.map((category: any) => {
-              const categorySolutions = publishedSolutions.filter(
-                (s: any) => s.categoryId === category.id
-              )
+        {/* Solutions Content */}
+        <section className="py-20 bg-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            {categoriesArray.length > 0 ? (
+              categoriesArray.map((category: any) => {
+                const categorySolutions = publishedSolutions.filter(
+                  (s: any) => s.categoryId === category.id
+                )
 
-              if (categorySolutions.length === 0) return null
+                if (categorySolutions.length === 0) return null
 
-              return (
-                <section key={category.id} className="mb-16">
-                  <div className="flex items-center gap-3 mb-8">
-                    {category.icon && <span className="text-3xl">{category.icon}</span>}
-                    <h2 className="text-3xl font-bold">{category.name}</h2>
-                  </div>
-                  {category.description && (
-                    <p className="text-gray-600 mb-8">{category.description}</p>
-                  )}
+                return (
+                  <div key={category.id} className="mb-16">
+                    <div className="flex items-center gap-3 mb-8">
+                      {category.icon && <span className="text-3xl">{category.icon}</span>}
+                      <h2 className="font-display text-3xl sm:text-4xl font-bold text-neutral-900">
+                        {category.name}
+                      </h2>
+                    </div>
+                    {category.description && (
+                      <p className="text-lg text-neutral-600 mb-8 max-w-3xl">
+                        {category.description}
+                      </p>
+                    )}
 
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {categorySolutions.map((solution: any) => (
-                      <Link
-                        key={solution.id}
-                        href={`/solutions/${solution.slug}`}
-                        className="group bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
-                      >
-                        {solution.imageUrl && (
-                          <div className="relative h-48 overflow-hidden">
-                            <img
-                              src={solution.imageUrl}
-                              alt={solution.title}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                            />
-                          </div>
-                        )}
-                        <div className="p-6">
-                          <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 transition-colors">
-                            {solution.title}
-                          </h3>
-                          <p className="text-gray-600 line-clamp-3">{solution.description}</p>
-                          
-                          {solution.features && solution.features.length > 0 && (
-                            <div className="mt-4 pt-4 border-t">
-                              <p className="text-sm font-semibold text-gray-700 mb-2">
-                                Key Features:
-                              </p>
-                              <ul className="text-sm text-gray-600 space-y-1">
-                                {solution.features.slice(0, 3).map((feature: string, i: number) => (
-                                  <li key={i} className="flex items-start gap-2">
-                                    <span className="text-green-500">✓</span>
-                                    <span className="line-clamp-1">{feature}</span>
-                                  </li>
-                                ))}
-                              </ul>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      {categorySolutions.map((solution: any) => (
+                        <Link
+                          key={solution.id}
+                          href={`/solutions/${solution.slug}`}
+                          className="group bg-white rounded-2xl border-2 border-neutral-200 hover:border-primary-400 transition-all hover:shadow-lg overflow-hidden"
+                        >
+                          {solution.imageUrl && (
+                            <div className="relative h-48 overflow-hidden">
+                              <img
+                                src={solution.imageUrl}
+                                alt={solution.title}
+                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                              />
                             </div>
                           )}
-                          
-                          <div className="mt-4 text-blue-600 font-semibold flex items-center gap-2">
-                            Learn More 
-                            <span className="group-hover:translate-x-1 transition-transform">→</span>
+                          <div className="p-6">
+                            <h3 className="font-display text-xl font-bold text-neutral-900 mb-2 group-hover:text-primary-600 transition-colors">
+                              {solution.title}
+                            </h3>
+                            <p className="text-neutral-700 line-clamp-3 leading-relaxed">
+                              {solution.description}
+                            </p>
+                            
+                            {solution.features && solution.features.length > 0 && (
+                              <div className="mt-4 pt-4 border-t border-neutral-200">
+                                <p className="text-sm font-semibold text-neutral-900 mb-2">
+                                  Key Features:
+                                </p>
+                                <ul className="text-sm text-neutral-700 space-y-1">
+                                  {solution.features.slice(0, 3).map((feature: string, i: number) => (
+                                    <li key={i} className="flex items-start gap-2">
+                                      <span className="text-primary-600">✓</span>
+                                      <span className="line-clamp-1">{feature}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                            
+                            <div className="mt-4 text-primary-600 font-semibold flex items-center gap-2">
+                              Learn More 
+                              <span className="group-hover:translate-x-1 transition-transform">→</span>
+                            </div>
                           </div>
-                        </div>
-                      </Link>
-                    ))}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                </section>
-              )
-            })
-          ) : (
-            <div className="text-center py-16">
-              <p className="text-gray-600 text-lg">No solutions available at the moment.</p>
-            </div>
-          )}
-        </div>
-      </main>
+                )
+              })
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-xl text-neutral-600">
+                  No solutions available at the moment. Check back soon!
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
+      </div>
     </>
   )
 }
