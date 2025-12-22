@@ -48,18 +48,32 @@ export default function CreateCareerPage() {
 
   const onSubmit = async (data: CareerForm) => {
     setIsLoading(true)
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/careers/create/page.tsx:49',message:'Create Career Start',data:{title:data.title,hasSalaryRange:!!data.salaryRange},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'I'})}).catch(()=>{});
+    // #endregion
 
     try {
+      // Backend doesn't accept salaryRange, remove it from payload
+      const { salaryRange, ...restData } = data
       const payload = {
-        ...data,
+        ...restData,
         responsibilities,
         requirements,
         benefits,
       }
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/careers/create/page.tsx:58',message:'Create Career Payload',data:{hasSalaryRange:!!salaryRange,payloadKeys:Object.keys(payload)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'I'})}).catch(()=>{});
+      // #endregion
       await api.post('/careers', payload)
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/careers/create/page.tsx:60',message:'Create Career Success',data:{title:data.title},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'I'})}).catch(()=>{});
+      // #endregion
       toast.success('Job posting created successfully')
       router.push('/careers')
     } catch (error: any) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/careers/create/page.tsx:65',message:'Create Career Error',data:{status:error.response?.status,message:error.response?.data?.message||error.message,errors:error.response?.data?.errors},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'I'})}).catch(()=>{});
+      // #endregion
       toast.error(error.response?.data?.message || 'Failed to create job posting')
     } finally {
       setIsLoading(false)

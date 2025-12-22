@@ -80,18 +80,32 @@ export default function EditCareerPage() {
 
   const onSubmit = async (data: CareerForm) => {
     setIsLoading(true)
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/careers/[id]/edit/page.tsx:81',message:'Update Career Start',data:{id,hasSalaryRange:!!data.salaryRange},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'I'})}).catch(()=>{});
+    // #endregion
 
     try {
+      // Backend doesn't accept salaryRange, remove it from payload
+      const { salaryRange, ...restData } = data
       const payload = {
-        ...data,
+        ...restData,
         responsibilities,
         requirements,
         benefits,
       }
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/careers/[id]/edit/page.tsx:91',message:'Update Career Payload',data:{id,hasSalaryRange:!!salaryRange,payloadKeys:Object.keys(payload)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'I'})}).catch(()=>{});
+      // #endregion
       await api.put(`/careers/${id}`, payload)
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/careers/[id]/edit/page.tsx:95',message:'Update Career Success',data:{id},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'I'})}).catch(()=>{});
+      // #endregion
       toast.success('Job posting updated successfully')
       router.push('/careers')
     } catch (error: any) {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/e167b145-9b4d-42f7-bb28-55f7996b5692',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'admin-panel/app/(dashboard)/careers/[id]/edit/page.tsx:99',message:'Update Career Error',data:{id,status:error.response?.status,message:error.response?.data?.message||error.message,errors:error.response?.data?.errors},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'I'})}).catch(()=>{});
+      // #endregion
       toast.error(error.response?.data?.message || 'Failed to update job posting')
     } finally {
       setIsLoading(false)
