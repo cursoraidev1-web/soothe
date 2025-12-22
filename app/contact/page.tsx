@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import { toast } from 'sonner'
 
 export default function ContactPage() {
@@ -112,7 +111,7 @@ export default function ContactPage() {
                     </a>
                   </div>
                 </div>
-
+{/* 
                 <div className="flex items-start">
                   <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-primary-600 to-accent-500 flex items-center justify-center text-white">
                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -127,7 +126,7 @@ export default function ContactPage() {
                       Headquarters: To Be Announced
                     </p>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="flex items-start">
                   <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-primary-600 to-accent-500 flex items-center justify-center text-white">
@@ -255,7 +254,6 @@ export default function ContactPage() {
           </div>
         </section>
       </div>
-      <Footer />
     </>
   )
 }

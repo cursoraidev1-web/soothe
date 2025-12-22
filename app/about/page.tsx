@@ -1,5 +1,4 @@
 import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 
 export const metadata = {
   title: 'About Us | SOOTHE Technologies',
@@ -173,7 +172,6 @@ export default function AboutPage() {
           </div>
         </section>
       </div>
-      <Footer />
     </>
   )
 }

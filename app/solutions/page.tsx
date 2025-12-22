@@ -1,7 +1,6 @@
 import { frontendApi } from '@/lib/frontend-api'
 import Link from 'next/link'
 import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import AccessibilityControls from '@/components/AccessibilityControls'
 
 export const metadata = {
@@ -109,7 +108,6 @@ export default async function SolutionsPage() {
           )}
         </div>
       </main>
-      <Footer />
     </>
   )
 }

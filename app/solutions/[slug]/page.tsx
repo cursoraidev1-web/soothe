@@ -1,7 +1,6 @@
 import { frontendApi } from '@/lib/frontend-api'
 import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import AccessibilityControls from '@/components/AccessibilityControls'
 import Link from 'next/link'
 
@@ -104,7 +103,6 @@ export default async function SolutionDetailPage({ params }: any) {
           </div>
         </div>
       </main>
-      <Footer />
     </>
   )
 }

@@ -1,7 +1,6 @@
 import { frontendApi } from '@/lib/frontend-api'
 import Link from 'next/link'
 import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 
 export const metadata = {
   title: 'Blog | SOOTHE Technologies',
@@ -148,8 +147,6 @@ export default async function BlogPage({ searchParams }: any) {
           )}
         </div>
       </main>
-
-      <Footer />
     </>
   )
 }

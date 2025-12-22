@@ -1,6 +1,5 @@
 import { frontendApi } from '@/lib/frontend-api'
 import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import Image from 'next/image'
 
 export const metadata = {
@@ -165,7 +164,6 @@ export default async function TeamPage() {
           </div>
         </section>
       </div>
-      <Footer />
     </>
   )
 }

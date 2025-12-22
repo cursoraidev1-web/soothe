@@ -1,6 +1,5 @@
 import { frontendApi } from '@/lib/frontend-api'
 import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import Link from 'next/link'
 
 export const metadata = {
@@ -230,7 +229,6 @@ export default async function CareersPage(){
           </div>
         </div>
       </section>
-      <Footer />
       </div>
     </>
   )
