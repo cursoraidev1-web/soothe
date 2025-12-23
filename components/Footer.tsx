@@ -32,13 +32,13 @@ export default function Footer() {
               <Image
                 src="/logo/logo-horizontal-light.png"
                 alt="SOOHE TECHNOLOGIES"
-                width={300}
-                height={120}
-                className="h-[7.5rem] w-auto"
+                width={360}
+                height={140}
+                className="h-[8.5rem] w-auto"
               />
             </div>
             <p className="text-sm text-neutral-400 mt-4 max-w-xs">
-              Making life easier. Inclusive. One solution at a time.
+              Build Easy Technology. Inclusive from day one, designed for humans.
             </p>
           </div>
 

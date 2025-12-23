@@ -53,7 +53,7 @@ export default async function InsightsPage() {
                 </span>
               </h1>
               <p className="text-xl text-neutral-700 leading-relaxed">
-                Thoughts on accessibility, technology, design, and building products that work for everyone.
+                Real-world notes on building easy technology—accessibility, product craft, and the decisions behind them.
               </p>
             </div>
           </div>

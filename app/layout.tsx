@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
 import './globals.css'
+import './modern.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AccessibilityControls from '@/components/AccessibilityControls'
@@ -20,13 +21,24 @@ const spaceGrotesk = Space_Grotesk({
 // Site configuration
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://soothe-technologies.com'
 const siteName = 'SOOTHE Technologies'
-const defaultDescription = 'Innovative, accessible, and user-centric apps and websites that simplify everyday life. Focusing on productivity, wellness, and inclusivity.'
+const defaultDescription = 'Build Easy Technology: inclusive, human-centered products that remove friction and help people breathe easy—across productivity, wellness, and accessibility.'
 const logoUrl = `${siteUrl}/logo/logo-horizontal-dark.png`
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: siteName,
+  url: siteUrl,
+  logo: logoUrl,
+  sameAs: [],
+  tagline: 'Build Easy Technology',
+  description: defaultDescription,
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${siteName} - Making Life Easier, One Solution at a Time`,
+    default: `${siteName} - Build Easy Technology`,
     template: `%s | ${siteName}`,
   },
   description: defaultDescription,
@@ -85,7 +97,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
-      <body className="font-sans">
+      <body className="font-sans modern-shell">
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <a href="#main-content" className="skip-to-main">
           Skip to main content
         </a>

@@ -49,7 +49,7 @@ export default function Hero() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            Making Life Easier. Inclusive. One Solution at a Time.
+            Build Easy Technology. Inclusive from the start.
           </motion.p>
 
           {/* Main Heading */}

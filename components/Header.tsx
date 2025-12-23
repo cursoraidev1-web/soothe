@@ -36,16 +36,16 @@ export default function Header() {
       role="banner"
     >
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
-        <div className="flex h-20 items-center justify-between">
+        <div className="flex h-24 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center group">
               <Image
                 src="/logo/logo-horizontal-dark.png"
                 alt="SOOHE TECHNOLOGIES"
-                width={300}
-                height={120}
-                className="h-[7.5rem] w-auto transition-opacity group-hover:opacity-80"
+                width={360}
+                height={140}
+                className="h-[8.5rem] w-auto transition-opacity group-hover:opacity-80"
                 priority
               />
             </Link>

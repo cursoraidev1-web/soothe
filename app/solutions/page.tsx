@@ -58,7 +58,7 @@ export default async function SolutionsPage() {
                 </span>
               </h1>
               <p className="text-xl text-neutral-700 leading-relaxed">
-                Innovative technology solutions designed for accessibility and everyone.
+                Build Easy Technology that people actually enjoy using—practical, inclusive, and tuned for real teams.
               </p>
             </div>
           </div>

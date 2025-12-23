@@ -76,16 +76,16 @@ export default function AboutPage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-4xl mx-auto">
               <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
-                Technology That{' '}
+              Technology That{' '}
                 <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">
-                  Empowers
-                </span>{' '}
-                Everyone
+                Empowers
+              </span>{' '}
+              Everyone
               </h1>
               <p className="text-xl text-neutral-700 leading-relaxed">
-                At SOOTHE TECHNOLOGIES, we believe technology should be a bridge, not a barrier. 
-                Our mission is to simplify everyday life through innovative, accessible, and user-centric 
-                digital solutions that truly make a difference.
+              We build easy technology that feels calm, clear, and considered. Every product we ship should
+              remove friction, honor accessibility from the start, and give people confidence to get things
+              done without thinking about the tool.
               </p>
             </div>
           </div>
@@ -101,19 +101,16 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-4 text-lg text-neutral-700 leading-relaxed">
                 <p>
-                  We founded SOOTHE TECHNOLOGIES with a simple observation: technology has the power 
-                  to transform lives, but too often it is built without considering the diverse needs 
-                  of real people.
+                We started SOOTHE because too much software makes people tense. The tools are powerful, but
+                the experience often ignores real-world constraints—accessibility, clarity, and time.
                 </p>
                 <p>
-                  Every day, millions of people struggle with digital tools that were not designed for 
-                  them—whether due to disabilities, age, language, or simply poor user experience. 
-                  This is not just frustrating; it is exclusionary.
+                We design for people first: different abilities, different contexts, and different levels of
+                comfort with technology. If it is not clear, it is not done.
                 </p>
                 <p>
-                  We are here to change that. By putting people first - all people - we are creating a 
-                  digital ecosystem that enhances productivity, supports wellness, removes barriers, 
-                  and makes everyday life genuinely easier.
+                We are here to build easy technology that respects attention, reduces noise, and works for
+                everyone—not just the power user.
                 </p>
               </div>
             </div>
